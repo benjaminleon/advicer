@@ -44,3 +44,6 @@ class UserRating(models.Model):
 
     def __str__(self):
         return self.user_name
+
+    class Meta:
+        unique_together = ('movie', 'user_name')
