@@ -1,50 +1,28 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.http import Http404
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
 from .models import Choice, Question
 
-# Create your views here.
-"""
+
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
-        Return the last five published questions.
+        """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
-"""
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
 
-    # Shortcut for loading template, fill a context and return an HttpResponse
-    return render(request, 'polls/index.html', context)
-
-"""
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
-"""
-def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
 
-"""
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
-
-"""
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html', {'question': question})
-    #response = "This is the result of question %s."
-    #return HttpResponse(response % question_id)
 
 
 def vote(request, question_id):
