@@ -28,25 +28,19 @@ class Choice(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=200)
-    release_year = models.CharField(max_length=4)
+    release_year = models.IntegerField(default=0)
+
     def __str__(self):
-        return self.title + " (" + self.release_year + ")"
+        return self.title + " (" + str(self.release_year) + ")"
+
+    class Meta:
+        unique_together = ('title', 'release_year')
 
 
-class User(models.Model):
-    name = models.CharField(max_length=200)
-    movie_ratings = {}
-    
-    def __str__(self):
-        return self.name
-
-
-class MovieRating(models.Model):
+class UserRating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0,
-     validators=[MaxValueValidator(5)])
+    user_name = models.CharField(max_length=200)
+    rating = models.IntegerField(default=0, validators=[MaxValueValidator(5)])
 
-    def __init__(self, movie, rating):
-        self.movie = movie
-        self.rating = rating
-
+    def __str__(self):
+        return self.user_name
