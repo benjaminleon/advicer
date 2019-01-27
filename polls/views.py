@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Choice, Question
-
+from .models import Movie
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -13,11 +13,9 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """
-        Return the last five published questions (not including those set
-        to be published in the future).
+        Return the recommended movies.
         """
-        return Question.objects.filter(pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+        return Movie.objects.all()
 
 
 class DetailView(generic.DetailView):
