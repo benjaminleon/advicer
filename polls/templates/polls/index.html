@@ -2,17 +2,22 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
-<h1>You should see:</h1>
-
-
-
-<h1>You have seen:</h1>
-{% if latest_question_list %}
-    <ul>
-        {% for question in latest_question_list %}
-            <li><a href="{% url 'polls:detail' question.id %}"> {{ question.question_text }}</a></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
+{% if user.is_authenticated %}
+    <h1>You should see:</h1>
+    <li>User: {{ user.get_username }}</li>
+    <h1>You have seen:</h1>
+    {% if latest_question_list %}
+        <ul>
+            {% for question in latest_question_list %}
+                <li><a href="{% url 'polls:detail' question.id %}"> {{ question.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
     {% endif %}
+
+{% else %}
+
+    <a href="{% url 'login' %}">Log in to get advice</a>
+
+{% endif %}
