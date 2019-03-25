@@ -5,7 +5,9 @@
 {% if user.is_authenticated %}
     <li>User: {{ user.get_username }}</li>
     <h1>You should see:</h1>
-    Rate movies to get recommendations
+    {% for recommendation in recommendations %}
+        <li>{{ recommendation }}</li>
+    {% endfor %}
 
     <h1>Your ratings:</h1>
     {% if ratings %}

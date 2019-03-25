@@ -3,14 +3,24 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from .models import Choice, Question
 from .models import Movie, UserRating
 
+from polls.getRecommendations import getRecommendations
+
 def index(request):
+    current_user = request.user
+    all_users = User.objects.all()
+
+    recommendations = getRecommendations(current_user, all_users)
+    print(recommendations)
+
     context = {
         'movies': Movie.objects.all(),
         'ratings': UserRating.objects.all(),
+        'recommendations': recommendations,
     }
 
     return render(request, 'polls/index.html', context)
