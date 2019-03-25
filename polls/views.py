@@ -5,17 +5,15 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Choice, Question
-from .models import Movie
+from .models import Movie, UserRating
 
-class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'movies'
+def index(request):
+    context = {
+        'movies': Movie.objects.all(),
+        'ratings': UserRating.objects.all(),
+    }
 
-    def get_queryset(self):
-        """
-        Return the recommended movies.
-        """
-        return Movie.objects.all()
+    return render(request, 'polls/index.html', context)
 
 
 class DetailView(generic.DetailView):

@@ -7,8 +7,16 @@
     <h1>You should see:</h1>
     Rate movies to get recommendations
 
-    <h1>You have rated:</h1>
-    No movies rated
+    <h1>All ratings:</h1>
+    {% if ratings %}
+    <ul>
+        {% for rating in ratings %}
+            <li>{{ rating }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No movies rated.</p>
+    {% endif %}
 
     <h1>Available movies:</h1>
     {% if movies %}

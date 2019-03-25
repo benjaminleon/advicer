@@ -43,7 +43,7 @@ class UserRating(models.Model):
     rating = models.IntegerField(default=0, validators=[MaxValueValidator(5)])
 
     def __str__(self):
-        return self.user_name
+        return "{} got score {}/5 by {}".format(self.movie.__str__(), str(self.rating), self.user_name)
 
     class Meta:
         unique_together = ('movie', 'user_name')
