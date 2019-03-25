@@ -7,6 +7,19 @@
     <h1>You should see:</h1>
     Rate movies to get recommendations
 
+    <h1>Your ratings:</h1>
+    {% if ratings %}
+    <ul>
+        {% for rating in ratings %}
+            {% if rating.user_name == user.get_username %}
+                <li>{{ rating }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>There are no ratings at all.</p>
+    {% endif %}
+
     <h1>All ratings:</h1>
     {% if ratings %}
     <ul>
