@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from .models import Choice, Question
-from .models import Movie, UserRating
+from .models import Movie, Rating
 
 from polls.getRecommendations import getRecommendations
 
@@ -14,12 +14,13 @@ def index(request):
     current_user = request.user
     all_users = User.objects.all()
 
+    print(current_user)
     recommendations = getRecommendations(current_user, all_users)
     print(recommendations)
 
     context = {
         'movies': Movie.objects.all(),
-        'ratings': UserRating.objects.all(),
+        'ratings': Rating.objects.all(),
         'recommendations': recommendations,
     }
 
