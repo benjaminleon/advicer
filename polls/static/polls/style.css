@@ -1,13 +1,15 @@
 li a {
-    color: green;
+    color: purple;
+}
+
+h1 {
+    color:#FFF0BA;
 }
 
 li {
-    color: blue;
+    color: BCD7FF;
 }
 
-/*
 body {
-    background : white url("images/background.png") no-repeat;
+    background-color: #292929;
 }
-*/
