@@ -1,15 +1,18 @@
-def getRecommendations(current_user, all_users):
-    current_user_name = current_user.get_username()
-
-    other_users = [user for user in all_users if user.get_username() != current_user_name]
-
-    most_similar_user = getMostSimilarUser(current_user, other_users)
-
+def getRecommendations(current_users_ratings, other_users_and_ratings):
+    most_similar_user = getMostSimilarUser(current_users_ratings, other_users_and_ratings)
     return getTopMoviesFrom(most_similar_user)
 
 
-def getMostSimilarUser(current_user, other_users):
-    return other_users[0]  # Don't do anything right now
+def getMostSimilarUser(current_users_ratings, other_users_and_ratings):
+    print("looking for most similar user among {}".format(list(other_users_and_ratings.keys())))
+
+    for username, rating in other_users_and_ratings.items():
+        print(username)
+        print(rating)
+
+        # Implement algorithm here
+
+    return list(other_users_and_ratings.keys())[0]  # Don't do anything right now
 
 
 def getTopMoviesFrom(user):
