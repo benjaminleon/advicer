@@ -13,28 +13,17 @@ from polls.getRecommendations import getRecommendations
 def index(request):
     current_user_name = request.user.get_username
 
-    #print("printing the current users ratings")
-
     current_users_ratings = [rating for rating in Rating.objects.filter(user = request.user)]
     other_users_ratings = [rating for rating in Rating.objects.all().exclude(user = request.user)]
 
-    #print("current user's ratings: {}".format(current_users_ratings))
-    #print("other user's ratings: {}".format(other_users_ratings))
-
     other_users_names = [user.get_username() for user in User.objects.all() if user.get_username != current_user_name]
-    #print(other_users_names)
 
     other_users_and_ratings = {}
 
     for name in other_users_names:
         other_users_and_ratings[name] = [rating for rating in other_users_ratings if rating.user.get_username() == name]
 
-    #print(other_users_and_ratings)
-
     recommendations = getRecommendations(current_users_ratings, other_users_and_ratings)
-
-    print(recommendations)
-
 
     context = {
         'movies': Movie.objects.all(),
