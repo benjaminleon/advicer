@@ -1,6 +1,6 @@
 def getRecommendations(current_users_ratings, other_users_and_ratings):
     most_similar_user = getMostSimilarUser(current_users_ratings, other_users_and_ratings)
-    return getTopMoviesFrom(most_similar_user, other_users_and_ratings)
+    return getUnseenTopMoviesFrom(current_users_ratings, most_similar_user, other_users_and_ratings)
 
 
 def getMostSimilarUser(current_users_ratings, other_users_and_ratings):
@@ -18,7 +18,23 @@ def getMostSimilarUser(current_users_ratings, other_users_and_ratings):
             similarity_scores[username] /= (max(1, movies_in_common))
 
     most_similar_user = min(other_users_and_ratings.keys(), key=similarity_scores.get)
+    print("The most similar user is {}".format(most_similar_user))
     return most_similar_user
+
+
+def getUnseenTopMoviesFrom(current_users_ratings, most_similar_user, other_users_and_ratings):
+    topMovies = getTopMoviesFrom(most_similar_user, other_users_and_ratings)
+    print("Top movies {}".format(topMovies))
+    unseenTopMovies = []
+
+    already_seen_movies = [rating.movie for rating in current_users_ratings]
+
+    for movie in topMovies:
+        if not movie in already_seen_movies:
+            unseenTopMovies.append(movie)
+
+    return unseenTopMovies
+
 
 def getTopMoviesFrom(the_one, other_users_and_ratings):
     for username, ratings in other_users_and_ratings.items():
