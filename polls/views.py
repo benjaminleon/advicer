@@ -11,6 +11,9 @@ from .models import Movie, Rating
 from polls.getRecommendations import getRecommendations
 
 def index(request):
+    if not request.user.get_username():
+        return render(request, 'polls/index.html')
+
     current_user_name = request.user.get_username
 
     current_users_ratings = [rating for rating in Rating.objects.filter(user = request.user)]
