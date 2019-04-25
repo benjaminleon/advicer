@@ -2,6 +2,11 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
+<form action="{% url 'polls:my_view' %}" method="post">
+{% csrf_token %}
+<input type="submit" value="Vote">
+</form>
+
 {% if user.is_authenticated %}
     <li>User: {{ user.get_username }}</li>
     <h1>You should see:</h1>
