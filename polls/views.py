@@ -53,7 +53,16 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
-def my_view(request):
+def my_view(request, new_rating):
+    ratings = list(Rating.objects.filter(user = request.user, movie = 5))
+    print("\n")
+    for rating in ratings:
+        print(rating)
+        rating.rating = new_rating
+        rating.save()
+
+    print(rating)
+    print("\n")
     print("I will do useful things in the future!")
 
     return HttpResponseRedirect(reverse('polls:index'))

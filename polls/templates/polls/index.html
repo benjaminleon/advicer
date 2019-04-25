@@ -2,9 +2,29 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
 
-<form action="{% url 'polls:my_view' %}" method="post">
+<form action="{% url 'polls:my_view' 1 %}" method="post">
 {% csrf_token %}
-<input type="submit" value="Vote">
+<input type="submit" value="1 point">
+</form>
+
+<form action="{% url 'polls:my_view' 2 %}" method="post">
+{% csrf_token %}
+<input type="submit" value="2 points">
+</form>
+
+<form action="{% url 'polls:my_view' 3 %}" method="post">
+{% csrf_token %}
+<input type="submit" value="3 points">
+</form>
+
+<form action="{% url 'polls:my_view' 4 %}" method="post">
+{% csrf_token %}
+<input type="submit" value="4 points">
+</form>
+
+<form action="{% url 'polls:my_view' 5 %}" method="post">
+{% csrf_token %}
+<input type="submit" value="5 points">
 </form>
 
 {% if user.is_authenticated %}
