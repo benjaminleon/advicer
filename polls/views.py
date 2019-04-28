@@ -30,10 +30,12 @@ def index(request):
     current_user_name = request.user.get_username()
     recommendations = getRecommendations(current_user_name, users_and_ratings)
 
+    choosable_scores = [1, 2, 3, 4, 5]
     context = {
         'movies': Movie.objects.all(),
         'ratings': Rating.objects.all(),
         'recommendations': recommendations,
+        'choosable_scores': choosable_scores,
     }
 
     return render(request, 'polls/index.html', context)
@@ -55,7 +57,7 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
-def my_view(request, new_rating):
+def UpdateRating(request, new_rating):
     ratings = list(Rating.objects.filter(user = request.user, movie = 5))
     print("\n")
     for rating in ratings:

@@ -1,31 +1,13 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
-
-<form action="{% url 'polls:my_view' 1 %}" method="post">
-{% csrf_token %}
-<input type="submit" value="1 point">
-</form>
-
-<form action="{% url 'polls:my_view' 2 %}" method="post">
-{% csrf_token %}
-<input type="submit" value="2 points">
-</form>
-
-<form action="{% url 'polls:my_view' 3 %}" method="post">
-{% csrf_token %}
-<input type="submit" value="3 points">
-</form>
-
-<form action="{% url 'polls:my_view' 4 %}" method="post">
-{% csrf_token %}
-<input type="submit" value="4 points">
-</form>
-
-<form action="{% url 'polls:my_view' 5 %}" method="post">
-{% csrf_token %}
-<input type="submit" value="5 points">
-</form>
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+  color: orange;
+}
+</style>
 
 {% if user.is_authenticated %}
     <li>User: {{ user.get_username }}</li>
@@ -62,7 +44,13 @@
     {% if movies %}
         <ul>
             {% for movie in movies %}
-                <li>{{ movie }}</li>
+                <li>{{ movie }}
+                    {% for score in choosable_scores %}
+                    <a href="{% url 'polls:update_rating' score %}">
+                            <span class="fa fa-star checked"{{ score }}</span>{{ score }}</span>
+                    </a>
+                    {% endfor %}
+                </li>
             {% endfor %}
         </ul>
     {% else %}
