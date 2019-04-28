@@ -11,7 +11,7 @@ from .models import Movie, Rating
 from polls.getRecommendations import getRecommendations
 
 def index(request):
-    if not request.user.get_username():
+    if not request.user.is_authenticated:
         return render(request, 'polls/index.html')
 
     # Extract the relevant information from the models to make the
