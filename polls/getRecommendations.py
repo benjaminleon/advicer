@@ -6,24 +6,24 @@ def getRecommendations(current_user_name, users_and_ratings):
 def getMostSimilarUser(current_user_name, users_and_ratings):
     similarity_scores = {}
     #print(users_and_ratings)
-    for username in users_and_ratings:
-        if username == current_user_name:
+    for other_username in users_and_ratings:
+        if other_username == current_user_name:
             continue
-        print("\nLooking for commong movies for current user {} and user {}".format(current_user_name, username))
+        print("\nLooking for commong movies for current user {} and user {}".format(current_user_name, other_username))
 
-        similarity_scores[username] = 0
+        similarity_scores[other_username] = 0
         # Find the movies this user has in common with other users
-        for movie in users_and_ratings[current_user_name]:
-            if movie in users_and_ratings[username]:
-                print("bingo for " + str(movie))
-                score1 = users_and_ratings[username][movie]
+        for seen_movies in users_and_ratings[current_user_name]:
+            if seen_movies in users_and_ratings[other_username]:
+                print("bingo for " + str(seen_movies))
+                score1 = users_and_ratings[other_username][seen_movies]
             else:
-                print("miss for " + str(movie))
+                print("miss for " + str(seen_movies))
                 expected_score = 3
                 score1 = expected_score
 
-            score2 = users_and_ratings[current_user_name][movie]
-            similarity_scores[username] += abs(score1 - score2)
+            score2 = users_and_ratings[current_user_name][seen_movies]
+            similarity_scores[other_username] += abs(score1 - score2)
 
             print(similarity_scores)
 
@@ -51,8 +51,8 @@ def getUnseenTopMoviesFrom(most_similar_user, users_and_ratings, current_user_na
 MAX_SCORE = 5
 def getTopMoviesFrom(user, users_and_ratings):
     print("looking for getting top movies from {}".format(user))
-    for username in users_and_ratings:
-        if user == username:
+    for other_username in users_and_ratings:
+        if user == other_username:
             print("ratings for user {}".format(user))
             ratings = users_and_ratings[user]
             topMovies = []
