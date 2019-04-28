@@ -14,19 +14,21 @@ def index(request):
     if not request.user.get_username():
         return render(request, 'polls/index.html')
 
-    current_user_name = request.user.get_username
+    # Extract the relevant information from the models to make the
+    # recommendation algorithm agnostic about Django
+    users_and_ratings = {}
+    users = User.objects.all()
+    for user in users:
+        ratings = Rating.objects.filter(user = user)
 
-    current_users_ratings = [rating for rating in Rating.objects.filter(user = request.user)]
-    other_users_ratings = [rating for rating in Rating.objects.all().exclude(user = request.user)]
+        movies_and_scores = {}
+        for rating in ratings:
+            movies_and_scores[rating.movie.__str__()] = rating.rating
 
-    other_users_names = [user.get_username() for user in User.objects.all() if user.get_username != current_user_name]
+        users_and_ratings[user.get_username()] = movies_and_scores
 
-    other_users_and_ratings = {}
-
-    for name in other_users_names:
-        other_users_and_ratings[name] = [rating for rating in other_users_ratings if rating.user.get_username() == name]
-
-    recommendations = getRecommendations(current_users_ratings, other_users_and_ratings)
+    current_user_name = request.user.get_username()
+    recommendations = getRecommendations(current_user_name, users_and_ratings)
 
     context = {
         'movies': Movie.objects.all(),
