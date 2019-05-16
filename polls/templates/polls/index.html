@@ -11,6 +11,11 @@
 
 {% if user.is_authenticated %}
     <li>User: {{ user.get_username }}</li>
+
+    <form action="{% url 'polls:search_results' %}" method="get">
+        <input name="q" type="text" placeholder="Search here :D">
+    </form>
+
     <h1>You should see:</h1>
     {% for recommendation in recommendations %}
         <li>{{ recommendation }}</li>

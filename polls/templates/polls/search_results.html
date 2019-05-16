@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<!-- Font Awesome Icon Library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.checked {
+  color: orange;
+}
+</style>
+
+{% if user.is_authenticated %}
+    <h1>Available movies:</h1>
+    {% if object_list %}
+        <ul>
+            {% for movie in object_list %}
+                <li>{{ movie }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No movie matched the search.</p>
+    {% endif %}
+
+{% else %}
+
+    <a href="{% url 'login' %}">Log in to get advice</a>
+
+{% endif %}

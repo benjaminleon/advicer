@@ -65,7 +65,6 @@ def UpdateRating(request, new_rating):
         rating.rating = new_rating
         rating.save()
 
-    print(rating)
     print("\n")
     print("I will do useful things in the future!")
 
@@ -89,3 +88,13 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+class SearchResultsView(generic.ListView):
+    model = Movie
+    template_name = 'polls/search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Movie.objects.filter(title__icontains=query)
+        return object_list
