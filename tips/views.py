@@ -6,14 +6,13 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-from .models import Choice, Question
 from .models import Movie, Rating
 
-from polls.getRecommendations import getRecommendations
+from tips.getRecommendations import getRecommendations
 
 def index(request):
     if not request.user.is_authenticated:
-        return render(request, 'polls/index.html')
+        return render(request, 'tips/index.html')
 
     # Extract the relevant information from the models to make the
     # recommendation algorithm agnostic about Django
@@ -39,23 +38,7 @@ def index(request):
         'choosable_scores': choosable_scores,
     }
 
-    return render(request, 'polls/index.html', context)
-
-
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
-
-    def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
-        return Question.objects.filter(pub_date__lte=timezone.now())
-
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
+    return render(request, 'tips/index.html', context)
 
 
 def UpdateRating(request, new_rating):
@@ -69,31 +52,12 @@ def UpdateRating(request, new_rating):
     print("\n")
     print("I will do useful things in the future!")
 
-    return HttpResponseRedirect(reverse('polls:index'))
-
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-            # Redisplay the question voting form.
-            return render(request, 'polls/detail.html', {
-                'question': question,
-                'error_message': "You didn't select a choice dude.",
-            })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
+    return HttpResponseRedirect(reverse('tips:index'))
+    
 
 class SearchResultsView(generic.ListView):
     model = Movie
-    template_name = 'polls/search_results.html'
+    template_name = 'tips/search_results.html'
 
     def get_queryset(self):
         query = self.request.GET.get('q')

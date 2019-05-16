@@ -1,6 +1,6 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
 <!-- Font Awesome Icon Library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -12,7 +12,7 @@
 {% if user.is_authenticated %}
     <li>User: {{ user.get_username }}</li>
 
-    <form action="{% url 'polls:search_results' %}" method="get">
+    <form action="{% url 'tips:search_results' %}" method="get">
         <input name="q" type="text" placeholder="Search here :D">
     </form>
 
@@ -51,7 +51,7 @@
             {% for movie in movies %}
                 <li>{{ movie }}
                     {% for score in choosable_scores %}
-                    <a href="{% url 'polls:update_rating' score %}">
+                    <a href="{% url 'tips:update_rating' score %}">
                             <span class="fa fa-star checked"{{ score }}</span>{{ score }}</span>
                     </a>
                     {% endfor %}
