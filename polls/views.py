@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 from .models import Choice, Question
 from .models import Movie, Rating
@@ -96,5 +97,6 @@ class SearchResultsView(generic.ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        object_list = Movie.objects.filter(title__icontains=query)
+        object_list = Movie.objects.filter(
+            Q(title__icontains=query) | Q(release_year__icontains=query))
         return object_list
