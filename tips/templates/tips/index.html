@@ -50,11 +50,15 @@
         <ul>
             {% for movie in movies %}
                 <li>{{ movie }}
-                    {% for score in choosable_scores %}
-                    <a href="{% url 'tips:update_rating' score %}">
-                            <span class="fa fa-star checked"{{ score }}</span>{{ score }}</span>
-                    </a>
-                    {% endfor %}
+                    <form action="{% url 'tips:rate' movie.id %}" method="POST">
+                        {% csrf_token %}
+                        {% for score in choosable_scores %}
+                            <input type="radio" name="score" id="score{{ forloop.counter }}"
+                            value="{{ score }}">
+
+                        {% endfor %}
+                    <input type="submit">
+                    </form>
                 </li>
             {% endfor %}
         </ul>

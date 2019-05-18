@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models import Q
-
+from django.shortcuts import redirect
 from .models import Movie, Rating
 
 from tips.getRecommendations import getRecommendations
@@ -41,16 +41,21 @@ def index(request):
     return render(request, 'tips/index.html', context)
 
 
-def UpdateRating(request, new_rating):
-    ratings = list(Rating.objects.filter(user = request.user, movie = 5))
-    print("\n")
-    for rating in ratings:
-        print(rating)
-        rating.rating = new_rating
-        rating.save()
+def UpdateRating(request, movie_id):
+    print("movie_id: {}".format(movie_id))
+    movie = get_object_or_404(Movie, id=movie_id)
+    rating, created = Rating.objects.update_or_create(user=request.user, movie=movie)
+    if created:
+        print("Created a new rating: {}".format(rating))
+    else:
+        print("Rating existed: {}".format(rating))
 
-    print("\n")
-    print("I will do useful things in the future!")
+    try:
+        rating.rating = request.POST['score']
+    except (KeyError):
+        return redirect('tips:index')
+
+    rating.save()
 
     return HttpResponseRedirect(reverse('tips:index'))
     
