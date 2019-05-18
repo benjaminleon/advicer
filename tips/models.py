@@ -20,10 +20,10 @@ class Movie(models.Model):
 class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0, validators=[MaxValueValidator(5)])
+    score = models.IntegerField(default=0, validators=[MaxValueValidator(5)])
 
     def __str__(self):
-        return "{} got score {}/5 by {}".format(self.movie.__str__(), str(self.rating), self.user)
+        return "{} got score {}/5 by {}".format(self.movie.__str__(), str(self.score), self.user)
 
     class Meta:
         unique_together = ('movie', 'user')

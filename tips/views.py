@@ -23,7 +23,7 @@ def index(request):
 
         movies_and_scores = {}
         for rating in ratings:
-            movies_and_scores[rating.movie.__str__()] = rating.rating
+            movies_and_scores[rating.movie.__str__()] = rating.score
 
         users_and_ratings[user.get_username()] = movies_and_scores
 
@@ -51,7 +51,7 @@ def UpdateRating(request, movie_id):
         print("Rating existed: {}".format(rating))
 
     try:
-        rating.rating = request.POST['score']
+        rating.score = request.POST['score']
     except (KeyError):
         return redirect('tips:index')
 
