@@ -42,6 +42,11 @@ def index(request):
 
 
 def UpdateRating(request, movie_id):
+    try:
+        new_score = request.POST['score']
+    except (KeyError):
+        return redirect('tips:index')
+
     print("movie_id: {}".format(movie_id))
     movie = get_object_or_404(Movie, id=movie_id)
     rating, created = Rating.objects.update_or_create(user=request.user, movie=movie)
@@ -50,11 +55,7 @@ def UpdateRating(request, movie_id):
     else:
         print("Rating existed: {}".format(rating))
 
-    try:
-        rating.score = request.POST['score']
-    except (KeyError):
-        return redirect('tips:index')
-
+    rating.score = new_score
     rating.save()
 
     return HttpResponseRedirect(reverse('tips:index'))
