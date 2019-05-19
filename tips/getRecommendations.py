@@ -1,12 +1,14 @@
 NO_MATCH_PUNISH = 0.1
 UNSEEN_MOVIE_SCORE = 3
+MAX_SCORE = 5
+
 
 def getRecommendations(current_user_name, users_and_ratings):
-    most_similar_user = getMostSimilarUser(current_user_name, users_and_ratings)
-    return getUnseenTopMoviesFrom(most_similar_user, users_and_ratings, current_user_name)
+    most_similar_users = getMostSimilarUsers(current_user_name, users_and_ratings)
+    return getUnseenTopMoviesFrom(most_similar_users, users_and_ratings, current_user_name)
 
 
-def getMostSimilarUser(current_user_name, users_and_ratings):
+def getMostSimilarUsers(current_user_name, users_and_ratings):
     similarity_scores = {}
     for other_username in users_and_ratings:
         if other_username == current_user_name:
@@ -24,33 +26,43 @@ def getMostSimilarUser(current_user_name, users_and_ratings):
                 score2 = users_and_ratings[other_username][seen_movie]
                 similarity_scores[other_username] += abs(score1 - score2)
             else:
-                debugPrint("miss for " + str(seen_movies))
+                debugPrint("miss for " + str(seen_movie))
                 similarity_scores[other_username] += abs(score1 - UNSEEN_MOVIE_SCORE) + NO_MATCH_PUNISH
 
             debugPrint("similarity_scores: {}".format(similarity_scores))
 
-    most_similar_user = min(similarity_scores, key=similarity_scores.get)
-    debugPrint("The most similar user is {}".format(most_similar_user))
+    most_similar_users = []
+    while similarity_scores:
+        most_similar_user = min(similarity_scores, key=similarity_scores.get)
+        most_similar_users.append(most_similar_user)
+        debugPrint("The most similar users are {}".format(most_similar_users))
+        similarity_scores.pop(most_similar_user)
 
-    return most_similar_user
-
-
-def getUnseenTopMoviesFrom(most_similar_user, users_and_ratings, current_user_name):
-    topMovies = getTopMoviesFrom(most_similar_user, users_and_ratings)
-    debugPrint("Top movies {}".format(topMovies))
-
-    unseenTopMovies = []
-    seen_movies = users_and_ratings[current_user_name]
-    debugPrint("Seen movies" + str(seen_movies))
-    for movie in topMovies:
-        if movie not in seen_movies:
-            unseenTopMovies.append(movie)
-
-    debugPrint(unseenTopMovies)
-    return unseenTopMovies
+    return most_similar_users
 
 
-MAX_SCORE = 5
+def getUnseenTopMoviesFrom(most_similar_users, users_and_ratings, current_user_name):
+    for user in most_similar_users:
+        topMovies = getTopMoviesFrom(user, users_and_ratings)
+        if topMovies:
+            debugPrint("Top movies from {}: {}".format(user, topMovies))
+            unseenTopMovies = []
+            seen_movies = users_and_ratings[current_user_name]
+            debugPrint("Seen movies" + str(seen_movies))
+            for movie in topMovies:
+                if movie not in seen_movies:
+                    unseenTopMovies.append(movie)
+
+            debugPrint("Unseen top movies: {}".format(unseenTopMovies))
+            if unseenTopMovies:
+                return unseenTopMovies
+
+        else:
+            debugPrint("{} didn't have any movies with high enough rating".format(user))
+
+    return ["Rate more movies and ask your friends to do the same to get recommendations :)"]
+
+
 def getTopMoviesFrom(user, users_and_ratings):
     if not user in users_and_ratings:
         return ["{} does not exist".format(user)]
@@ -65,8 +77,6 @@ def getTopMoviesFrom(user, users_and_ratings):
         debugPrint("Top movies: {}".format(topMovies))
         good_score = good_score - 1
 
-    if not topMovies:
-        return ["{} does not have any movies with rating 3 or higher".format(user)]
     return topMovies
 
 
