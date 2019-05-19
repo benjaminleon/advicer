@@ -52,26 +52,22 @@ def getUnseenTopMoviesFrom(most_similar_user, users_and_ratings, current_user_na
 
 MAX_SCORE = 5
 def getTopMoviesFrom(user, users_and_ratings):
+    if not user in users_and_ratings:
+        return ["{} does not exist".format(user)]
+
     debugPrint("looking for top movies from {}".format(user))
+    ratings = users_and_ratings[user]
+    topMovies = []
+    good_score = MAX_SCORE
+    while not topMovies and good_score > 2:
+        debugPrint("good score is {}".format(good_score))
+        topMovies = [title for title in ratings if ratings[title] == good_score]
+        debugPrint("Top movies: {}".format(topMovies))
+        good_score = good_score - 1
 
-    for some_user in users_and_ratings:
-        if user == some_user:
-            debugPrint("ratings for user {}".format(user))
-            ratings = users_and_ratings[user]
-            topMovies = []
-            good_score = MAX_SCORE
-            while not topMovies and good_score > 2:
-                debugPrint("good score is {}".format(good_score))
-                topMovies = [title for title in ratings if ratings[title] == good_score]
-                debugPrint("Top movies: {}".format(topMovies))
-                good_score = good_score - 1
-
-            if not topMovies:
-                return ["{} does not have any movies with rating 3 or higher".format(user)]
-            return topMovies
-
-
-    return ["Didn't find the most similar user : /"]
+    if not topMovies:
+        return ["{} does not have any movies with rating 3 or higher".format(user)]
+    return topMovies
 
 
 def debugPrint(mystr):
