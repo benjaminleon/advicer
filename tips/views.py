@@ -58,7 +58,14 @@ def UpdateRating(request, movie_id):
     rating.save()
 
     return HttpResponseRedirect(reverse('tips:index'))
-    
+
+
+def DeleteRating(request, movie_id):
+    movie = get_object_or_404(Movie, id=movie_id)
+    rating = Rating.objects.filter(movie=movie, user=request.user)
+    rating.delete()
+    return HttpResponseRedirect(reverse('tips:index'))
+
 
 class SearchResultsView(generic.ListView):
     model = Movie

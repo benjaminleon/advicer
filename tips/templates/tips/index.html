@@ -59,6 +59,10 @@
                         {% endfor %}
                     <input type="submit">
                     </form>
+                    <form action="{% url 'tips:delete' movie.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="delete">
+                    </form>
                 </li>
             {% endfor %}
         </ul>
