@@ -15,6 +15,20 @@
         <ul>
             {% for movie in object_list %}
                 <li>{{ movie }}</li>
+
+                <form action="{% url 'tips:rate' movie.id %}" method="POST">
+                    {% csrf_token %}
+                    {% for score in choosable_scores %}
+                        <input type="radio" name="score" id="{{ score }}"
+                        value="{{ score }}">
+
+                    {% endfor %}
+                <input type="submit">
+                </form>
+                <form action="{% url 'tips:delete' movie.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="delete">
+                </form>
             {% endfor %}
         </ul>
     {% else %}

@@ -76,4 +76,10 @@ class SearchResultsView(generic.ListView):
         query = self.request.GET.get('q')
         object_list = Movie.objects.filter(
             Q(title__icontains=query) | Q(release_year__icontains=query))
+
         return object_list
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['choosable_scores'] = [1, 2, 3, 4, 5]
+        return context
