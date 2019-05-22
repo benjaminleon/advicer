@@ -10,7 +10,12 @@
 </style>
 
 {% if user.is_authenticated %}
-    <h1>Available movies:</h1>
+    <h1>Search result</h1>
+
+    <form action="{% url 'tips:search_results' %}" method="get">
+        <input name="q" type="text" placeholder="Search again">
+    </form>
+
     {% if object_list %}
         <ul>
             {% for movie in object_list %}
