@@ -10,6 +10,9 @@
 </style>
 
 {% if user.is_authenticated %}
+
+    <a href="{% url 'tips:index' %}">Back to home</a>
+
     <h1>Search result</h1>
 
     <form action="{% url 'tips:search_results' %}" method="get">
@@ -21,7 +24,7 @@
             {% for movie in object_list %}
                 <li>{{ movie }}</li>
 
-                <form action="{% url 'tips:rate' movie.id %}" method="POST">
+                <form action="{% url 'tips:new_rating' movie.id %}" method="POST">
                     {% csrf_token %}
                     {% for score in choosable_scores %}
                         <input type="radio" name="score" id="{{ score }}"

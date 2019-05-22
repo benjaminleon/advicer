@@ -41,7 +41,7 @@ def index(request):
     return render(request, 'tips/index.html', context)
 
 
-def UpdateRating(request, movie_id):
+def NewRating(request, movie_id):
     try:
         new_score = request.POST['score']
     except (KeyError):
@@ -61,9 +61,29 @@ def UpdateRating(request, movie_id):
     return HttpResponseRedirect(reverse('tips:index'))
 
 
-def DeleteRating(request, movie_id):
+def UpdateRating(request, rating_id):
+    try:
+        new_score = request.POST['score']
+    except (KeyError):
+        return redirect('tips:index')
+
+    print("rating_id: {}".format(rating_id))
+    rating = get_object_or_404(Rating, id=rating_id)
+    rating.score = new_score
+    rating.save()
+
+    return HttpResponseRedirect(reverse('tips:index'))
+
+
+def DeleteRatingByMovie(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     rating = Rating.objects.filter(movie=movie, user=request.user)
+    rating.delete()
+    return HttpResponseRedirect(reverse('tips:index'))
+
+
+def DeleteRating(request, rating_id):
+    rating = get_object_or_404(Rating, id=rating_id)
     rating.delete()
     return HttpResponseRedirect(reverse('tips:index'))
 
