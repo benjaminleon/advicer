@@ -97,7 +97,8 @@ class SearchResultsView(generic.ListView):
         object_list = Movie.objects.filter(
             Q(title__icontains=query) | Q(release_year__icontains=query))
 
-        return object_list
+        MAX_NR_OF_MOVIES_TO_DISPLAY = 20
+        return object_list[:MAX_NR_OF_MOVIES_TO_DISPLAY]
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
