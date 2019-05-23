@@ -13,9 +13,6 @@ class Movie(models.Model):
     def __str__(self):
         return self.title + " (" + str(self.release_year) + ")"
 
-    class Meta:
-        unique_together = ('title', 'release_year')
-
 
 class Rating(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
