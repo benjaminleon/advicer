@@ -1,19 +1,16 @@
 {% load static %}
 
+<title>Home</title>
+
 <link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
-<!-- Font Awesome Icon Library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-.checked {
-  color: orange;
-}
-</style>
 
 {% if user.is_authenticated %}
     <li>User: {{ user.get_username }}</li>
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+    <p><a href="{% url 'password_reset' %}">Reset password</a></p>
 
     <form action="{% url 'tips:search_results' %}" method="get">
-        <input name="q" type="text" placeholder="Search here :D">
+        <input name="q" type="text" placeholder="Search here">
     </form>
 
     <h1>You should see:</h1>
