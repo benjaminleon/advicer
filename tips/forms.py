@@ -5,9 +5,14 @@ from django.contrib.auth import get_user_model
 
 class CustomUserCreationForm(UserCreationForm):
 
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True
+
     class Meta(UserCreationForm):
-        model = get_user_model()#CustomUser
+        model = CustomUser
         fields = ('username', 'email')
+
 
 class CustomUserChangeForm(UserChangeForm):
 

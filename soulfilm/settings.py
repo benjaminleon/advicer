@@ -125,5 +125,6 @@ AUTH_USER_MODEL = 'tips.CustomUser'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/tips/'
+LOGOUT_REDIRECT_URL = '/tips/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
