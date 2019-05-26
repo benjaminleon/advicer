@@ -3,16 +3,18 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import redirect
 from .models import Movie, Rating
+from django.contrib.auth import get_user_model
 
 from tips.getRecommendations import getRecommendations
 
 def index(request):
     if not request.user.is_authenticated:
         return render(request, 'tips/index.html')
+
+    User = get_user_model()
 
     # Extract the relevant information from the models to make the
     # recommendation algorithm agnostic about Django
