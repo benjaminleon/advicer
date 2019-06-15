@@ -9,7 +9,9 @@ with open('m.tsv', 'r') as movietsv:
     for entry in content:
         splitted_entry = entry.split('\t')
         release_year = splitted_entry[5]
-        if release_year.isdigit():
+        title = splitted_entry[3]
+
+        if release_year.isdigit() and title != "\\N" and len(title) < 200:
             release_years.append(release_year)
             titles.append(splitted_entry[3])
 
