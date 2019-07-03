@@ -125,6 +125,15 @@ STATICFILES_DIRS = [
 
 AUTH_USER_MODEL = 'tips.CustomUser'
 
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/tips/'
 LOGOUT_REDIRECT_URL = '/tips/'
