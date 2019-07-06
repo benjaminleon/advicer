@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 {% if user.is_authenticated %}
-    <li>User: {{ user.get_username }}</li>
     <p><a href="{% url 'logout' %}">Logout</a></p>
     <p><a href="{% url 'password_reset' %}">Reset password</a></p>
 
