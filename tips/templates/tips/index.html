@@ -1,61 +1,107 @@
 {% load static %}
-
-<title>Home</title>
-
-<link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
 
-{% if user.is_authenticated %}
-    <p><a href="{% url 'logout' %}">Logout</a></p>
-    <p><a href="{% url 'password_reset' %}">Reset password</a></p>
+<body>
+    <title>Get Started</title>
+    {% if user.is_authenticated %}
+    <div class="container">
+        <header>
+            <nav>
+                <a href="#" id="hamburger">
+                    <img src="{% static 'tips/images/hamburger.svg' %}" alt="toggle menu" class="menu" id="menu">
+                </a>
 
-    <form action="{% url 'tips:search_results' %}" method="get">
-        <input name="q" type="text" placeholder="Search here">
-    </form>
+                <ul class="show-desktop hide-mobile" id="nav">
+                    <li><a href="#">Recommended for me</a></li>
+                    <li><a href="#">My rated movies</a></li>
+                    <li><a href="#">Common movies</a></li>
+                    <li><a href="#">Log out</a></li>
+                </ul>
+            </nav>
 
-    <h1>You should see:</h1>
-    {% for recommendation in recommendations %}
-        <li>{{ recommendation }}</li>
-    {% endfor %}
+            <form action="{% url 'tips:search_results' %}" method="get">
+                <input name="q" type="text" placeholder="Search movie..." id="search_bar">
+            </form>
+        </header>
 
-    <h1>Your ratings:</h1>
-    {% if ratings %}
-    <ul>
-        {% for rating in ratings %}
-            {% if rating.user.username == user.get_username %}
-            <li>{{ rating }}
+        <div class="section">
+            <div id="section2">
+                    <div class="get_started">
+                        Let's get started!</h1>
+                    </div>
+                    <div class="start_1">
+                        <p>1.</p>
+                        <p>Rate both movies you've enjoyed and movies you've disliked</p>
+                    </div>
+                    <div class="start_2">
+                        <p>2.</p>
+                        <p>The more movies you rate, the better</p>
+                    </div>
 
-                <form action="{% url 'tips:update_rating' rating.id %}" method="POST">
-                    {% csrf_token %}
-                    {% for score in choosable_scores %}
-                        <input type="radio" name="score" id="{{ score }}"
-                        value="{{ score }}">
+                    <div class="start_3">
+                        <p>3.</p>
+                        <div>
+                            <p>Can't remember what you've seen?</p>
+                            <a href="#" id=popular>Have a look at the movies others have rated!</a>
+                        </div>
+                    </div>
+                </div>
+            <img src="{% static 'tips/images/triangle.svg' %}" id="triangle">
+            </div>
+        </div>
 
-                    {% endfor %}
-                <input type="submit">
-                </form>
-                <form action="{% url 'tips:delete' rating.id %}" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" value="delete">
-                </form>
+    </div>
+    <!--
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+        <p><a href="{% url 'password_reset' %}">Reset password</a></p>
 
-            </li>
-            {% endif %}
+
+
+        <h1>You should see:</h1>
+        {% for recommendation in recommendations %}
+            <li>{{ recommendation }}</li>
         {% endfor %}
-    </ul>
+
+        <h1>Your ratings:</h1>
+        {% if ratings %}
+        <ul>
+            {% for rating in ratings %}
+                {% if rating.user.username == user.get_username %}
+                <li>{{ rating }}
+
+                    <form action="{% url 'tips:update_rating' rating.id %}" method="POST">
+                        {% csrf_token %}
+                        {% for score in choosable_scores %}
+                            <input type="radio" name="score" id="{{ score }}"
+                            value="{{ score }}">
+
+                        {% endfor %}
+                    <input type="submit">
+                    </form>
+                    <form action="{% url 'tips:delete' rating.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="delete">
+                    </form>
+
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>There are no ratings at all.</p>
+        {% endif %}
+    -->
     {% else %}
-        <p>There are no ratings at all.</p>
-    {% endif %}
+    <div class="w3-row">
+        <div class="w3-col w3-green w3-container l4"></div>
+        <div class="w3-col w3-center w3-container l2">
+            <a href="{% url 'login' %}" class="w3-button w3-padding-large w3-round-xlarge w3-large w3-blue w3-hover-indigo">Log in to get advice</a></div>
+        <div class="w3-col w3-center w3-container l1">
+            <a href="{% url 'signup' %}" class="w3-button w3-padding-large w3-round-xlarge w3-large w3-blue w3-hover-indigo">Sign up</a></div>
+        <div class="w3-col w3-white w3-container l5"></div>
 
-{% else %}
-<div class="w3-row">
-    <div class="w3-col w3-green w3-container l4"></div>
-    <div class="w3-col w3-center w3-container l2">
-        <a href="{% url 'login' %}" class="w3-button w3-padding-large w3-round-xlarge w3-large w3-blue w3-hover-indigo">Log in to get advice</a></div>
-    <div class="w3-col w3-center w3-container l1">
-        <a href="{% url 'signup' %}" class="w3-button w3-padding-large w3-round-xlarge w3-large w3-blue w3-hover-indigo">Sign up</a></div>
-    <div class="w3-col w3-white w3-container l5"></div>
-
-</div>
+    </div>
+</body>
 {% endif %}

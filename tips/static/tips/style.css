@@ -1,29 +1,76 @@
-li a {
-    color: #FFF0BA;
-}
-
-a:link, a:visited {
-    background-color: #420574;
-    color: white;
-    padding: 14px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-  }
-
-a:hover, a:active {
-    background-color: #144d83;
-}
-
-h1 {
-    color:#FFF0BA;
-}
-
-li {
-    color: #BCD7FF;
-}
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600');
 
 body {
-    background-color: #292929;
-    color: #ffffff
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    background: #3f3f3f;
+    border: 2px solid palevioletred;
+}
+
+p {
+    font-size: .9em;
+    line-height: 1.6em;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    position: absolute;
+    border: 2px solid green;
+}
+
+header {
+    position: relative;
+    display: flex;
+    margin: 1em;
+    border: 2px solid cyan;
+    overflow: visible;
+}
+
+#menu {
+    border: 2px solid yellow;
+    margin-top: 0.1em;
+}
+
+#search_bar {
+    position: relative;
+    left: 1em;
+    border: 2px solid rgb(255, 153, 0);
+}
+
+.section {
+    position: relative;
+    margin: 0.5em;
+    font-size: 24px;
+    border: 2px solid black;
+    background-color: #303030
+}
+
+.get_started {
+    position: relative;
+    top: 1em;
+    text-align: center;
+    font-weight: 800;
+    font-size: 30px;
+    line-height: 26px;
+}
+
+.section #popular {
+    color: #80CBC4;
+    text-decoration: none;
+}
+
+#triangle {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    border: 2px dashed yellowgreen;
+}
+
+.hide-mobile {
+    display: none;
 }
