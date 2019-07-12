@@ -5,7 +5,7 @@
 
 <body>
     <title>Get Started</title>
-    {% if user.is_authenticated %}
+
     <div class="container">
         <header>
             <nav>
@@ -97,15 +97,4 @@
             <p>There are no ratings at all.</p>
         {% endif %}
     -->
-    {% else %}
-    <div class="w3-row">
-        <div class="w3-col w3-green w3-container l4"></div>
-        <div class="w3-col w3-center w3-container l2">
-            <a href="{% url 'login' %}" class="w3-button w3-padding-large w3-round-xlarge w3-large w3-blue w3-hover-indigo">Log in to get advice</a></div>
-        <div class="w3-col w3-center w3-container l1">
-            <a href="{% url 'signup' %}" class="w3-button w3-padding-large w3-round-xlarge w3-large w3-blue w3-hover-indigo">Sign up</a></div>
-        <div class="w3-col w3-white w3-container l5"></div>
-
-    </div>
 </body>
-{% endif %}
