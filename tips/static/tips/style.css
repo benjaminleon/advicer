@@ -123,3 +123,42 @@ header {
 .hide-mobile {
     display: none;
 }
+
+
+/************** Log in view **************/
+
+.login_body {
+    border: 1px solid cyan;
+}
+
+.login_container {
+    border: 1px solid yellowgreen;
+    text-align: center;
+    width: 100% - 1em;
+    margin: 2em auto;
+}
+
+.login_container a {
+    color: white;
+}
+
+#login_message {
+    font-size: 20px;
+    font-weight: 600;
+    border: 1px dashed orangered;
+    margin: 2em auto;
+}
+
+#login_form {
+    border: 1px dashed orangered;
+    margin: 0 auto;
+}
+
+#login_form_username input, select, textarea {
+    background-color: #bde9ba;
+}
+
+#forgot_pw {
+    font-size: 10px;
+    text-decoration: none;
+}
