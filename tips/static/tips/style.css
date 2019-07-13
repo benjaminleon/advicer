@@ -149,9 +149,9 @@ header {
     margin: 2em auto;
 }
 
-#login_form {
-    border: 1px dashed orangered;
+#login_table {
     margin: 0 auto;
+    text-align: center;
 }
 
 #login_form_username input, select, textarea {
