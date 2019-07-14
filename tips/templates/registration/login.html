@@ -1,5 +1,7 @@
 {% load static %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
 
 <body class="login_body">
@@ -14,34 +16,38 @@
             {% csrf_token %}
             <table id="login_table">
                 <tr>
-                    <td>{{ form.username.label_tag }}</td>
+                    <td id="account">Account</td>
                 </tr>
                 <tr>
                     <td id="login_form_username">{{ form.username }}</td>
                 </tr>
                 <tr>
-                    <td>{{ form.password.label_tag }}</td>
+                    <td id="password">Password</td>
                 </tr>
                 <tr>
-                    <td>{{ form.password }}</td>
+                    <td id="password_field">{{ form.password }}</td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" value="login" />
+                        <p><a href="{% url 'password_reset' %}" id="forgot_pw">Forgot password?</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Log in" class="login_signup_btns" id="login_btn" />
                         <input type="hidden" name="next" value="{{ next }}" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p><a href="{% url 'signup' %}">Sign up</a></p>
+                        <a href="{% url 'signup' %}" class="login_signup_btns" id="signup_btn">
+                            Sign up
+                        </a>
                     </td>
                 </tr>
             </table>
 
         </form>
-
-        {# Assumes you setup the password_reset view in your URLconf #}
-        <p><a href="{% url 'password_reset' %}" id="forgot_pw">Forgot password?</a></p>
 
     </div>
 </body>

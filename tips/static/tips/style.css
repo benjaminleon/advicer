@@ -4,7 +4,6 @@ body {
     font-family: 'Montserrat', sans-serif;
     color: white;
     background: #3f3f3f;
-    /*border: 2px solid palevioletred;*/
 }
 
 p {
@@ -20,19 +19,16 @@ ul {
 
 .container {
     position: absolute;
-    /*border: 2px solid green;*/
 }
 
 header {
     position: relative;
     display: flex;
     margin: 1em;
-    /*border: 2px solid cyan;*/
     overflow: visible;
 }
 
 #menu {
-    /*border: 2px solid yellow;*/
     margin-top: 0.1em;
     width: 3em;
 }
@@ -41,7 +37,6 @@ header {
     position: relative;
     left: 1em;
     width: 150%;
-    /*border: 2px solid rgb(255, 153, 0);*/
 }
 
 .section {
@@ -59,15 +54,12 @@ header {
     font-weight: 800;
     font-size: 30px;
     line-height: 26px;
-    /*border: 2px solid rgb(127, 0, 0);*/
 }
 
 #onetwothree {
     position: relative;
     top: 2em;
     left: 0.5em;
-    /*border: 2px dashed yellowgreen;*/
-
 }
 
 .step_1 {
@@ -79,7 +71,6 @@ header {
     top: -4.1em;
     left: -0.7em;
     height: 6.6em;
-    /*border: 2px dashed yellowgreen;*/
 }
 
 .step_1 #text {
@@ -117,7 +108,6 @@ header {
     position: absolute;
     bottom: 0px;
     right: 0px;
-    /*border: 2px dashed yellowgreen;*/
 }
 
 .hide-mobile {
@@ -127,25 +117,15 @@ header {
 
 /************** Log in view **************/
 
-.login_body {
-    border: 1px solid cyan;
-}
-
 .login_container {
-    border: 1px solid yellowgreen;
     text-align: center;
     width: 100% - 1em;
     margin: 2em auto;
 }
 
-.login_container a {
-    color: white;
-}
-
 #login_message {
     font-size: 20px;
     font-weight: 600;
-    border: 1px dashed orangered;
     margin: 2em auto;
 }
 
@@ -154,11 +134,42 @@ header {
     text-align: center;
 }
 
-#login_form_username input, select, textarea {
-    background-color: #bde9ba;
+#account, #password {
+    text-align: left;
+    font-size: 14px;
+}
+
+.login_signup_btns {
+    font-size: 16px;
+    padding: 1em;
+    line-height: 0px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-bottom: 1.5em;
+}
+
+#login_btn {
+    margin-top: 2em;
+    width: 100%;
+    height: 2em;
+    border: none;
+    background-color: 288BFF;
+    color: white;
+    cursor: pointer;
+}
+
+#signup_btn {
+    text-decoration: none;
+    color: black;
+    background-color: b8b8b8;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 5.4em;
+    padding-right: 5.4em;
 }
 
 #forgot_pw {
     font-size: 10px;
     text-decoration: none;
+    color: b8b8b8;
 }
