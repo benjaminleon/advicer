@@ -21,13 +21,13 @@
                 </ul>
             </nav>
 
-            <form action="{% url 'tips:search_results' %}" method="get">
-                <input name="q" type="text" placeholder="Search movie..." id="search_bar">
+            <form action="{% url 'tips:search_results' %}" method="get" id="search_bar">
+                <input name="q" type="text" placeholder="Search movie..." >
             </form>
         </header>
 
         <div class="section">
-            <div id="section2">
+
                 <div class="get_started">
                     Let's get started!</h1>
                 </div>
@@ -46,14 +46,14 @@
                     <div class="step_3">
                         <p>3.</p>
                         <div id="text">
-                            <p>Can't remember what you've seen?
+                            <p>Can't remember what you've seen?<br>
                                 <a href="#" id=popular>Have a look at the movies others have rated!</a>
                             </p>
                         </div>
                     </div>
                 </div>
             <img src="{% static 'tips/images/triangle.svg' %}" id="triangle">
-            </div>
+
         </div>
 
     </div>

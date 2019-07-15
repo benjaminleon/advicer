@@ -17,33 +17,35 @@ ul {
     padding: 0;
 }
 
-.container {
-    position: absolute;
-}
 
 header {
-    position: relative;
-    display: flex;
-    margin: 1em;
-    overflow: visible;
+    display: table;
+    width: 100%;
+    padding: 1em;
+    padding-top: 2em;
 }
 
 #menu {
     margin-top: 0.1em;
-    width: 3em;
+    width: auto;
 }
 
-#search_bar {
-    position: relative;
-    left: 1em;
-    width: 150%;
+#search_bar, #menu {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#search_bar input {
+    width: 100%;
+    border: 1px solid #303030;
 }
 
 .section {
     position: relative;
     margin: 0.5em;
+    padding-right: 0.5em;
     padding-bottom: 4em;
-    font-size: 24px;
+    font-size: 17px;
     background-color: #303030
 }
 
@@ -56,26 +58,27 @@ header {
     line-height: 26px;
 }
 
+#guide_arrow {
+    position: absolute;
+    top: -4.6em;
+    left: -0.8em;
+    height: 7.2em;
+}
+
 #onetwothree {
     position: relative;
     top: 2em;
     left: 0.5em;
+    margin-right: 0.5em;
 }
 
 .step_1 {
     display: flex;
 }
 
-#guide_arrow {
-    position: absolute;
-    top: -4.1em;
-    left: -0.7em;
-    height: 6.6em;
-}
-
 .step_1 #text {
     position: relative;
-    left: 1em;
+    left: 0.5em;
     margin-right: 1em;
 }
 
@@ -85,7 +88,7 @@ header {
 
 .step_2 #text {
     position: relative;
-    left: 1em;
+    left: 0.5em;
     margin-right: 1em;
 }
 
@@ -95,12 +98,13 @@ header {
 
 .step_3 #text {
     position: relative;
-    left: 1em;
+    left: 0.5em;
     margin-right: 1em;
 }
 
 .section #popular {
     color: #80CBC4;
+    font-weight: 600;
     text-decoration: none;
 }
 
