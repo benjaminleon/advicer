@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
@@ -9,44 +10,34 @@
 }
 </style>
 
-<title>Search results</title>
+{% block title %}Search results{% endblock %}
 
-{% if user.is_authenticated %}
+{% block content %}
 
-    <a href="{% url 'tips:index' %}">Back to home</a>
+<div class="section">
+    <div class="headline">Search results</div>
 
-    <h1>Search result</h1>
-
-    <form action="{% url 'tips:search_results' %}" method="get">
-        <input name="q" type="text" placeholder="Search again">
-    </form>
-
+    <div id="main_content">
     {% if object_list %}
-        <ul>
+        <ul id="search_results">
             {% for movie in object_list %}
-                <li>{{ movie }}</li>
+            <li>{{ movie }}</li>
 
-                <form action="{% url 'tips:new_rating' movie.id %}" method="POST">
-                    {% csrf_token %}
-                    {% for score in choosable_scores %}
-                        <input type="radio" name="score" id="{{ score }}"
-                        value="{{ score }}">
-
-                    {% endfor %}
+            <form action="{% url 'tips:new_rating' movie.id %}" method="POST">
+                {% csrf_token %}
+                {% for score in choosable_scores %}
+                    <input type="radio" name="score" id="{{ score }}"
+                    value="{{ score }}">
+                {% endfor %}
                 <input type="submit">
-                </form>
-                <form action="{% url 'tips:delete' movie.id %}" method="POST">
-                    {% csrf_token %}
-                    <input type="submit" value="delete">
-                </form>
+            </form>
+
             {% endfor %}
         </ul>
     {% else %}
         <p>No movie matched the search.</p>
     {% endif %}
+    </div>
+</div>
 
-{% else %}
-
-    <a href="{% url 'login' %}">Log in to get advice</a>
-
-{% endif %}
+{% endblock %}

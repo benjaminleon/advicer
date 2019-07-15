@@ -45,15 +45,15 @@ header {
     padding-right: 0.5em;
     padding-bottom: 4em;
     font-size: 17px;
-    background-color: #303030
+    background-color: #303030;
 }
 
-.get_started {
+.headline {
     position: relative;
     top: 1em;
     text-align: center;
     font-weight: 800;
-    font-size: 30px;
+    font-size: 24px;
     line-height: 26px;
 }
 
@@ -64,7 +64,7 @@ header {
     height: 7.2em;
 }
 
-#onetwothree {
+#main_content {
     position: relative;
     top: 2em;
     left: 0.5em;
@@ -175,4 +175,12 @@ header {
     font-size: 10px;
     text-decoration: none;
     color: b8b8b8;
+}
+
+
+/************* Search results ************/
+
+#search_results {
+    padding-top: 1em;
+    font-size: 12px;
 }
