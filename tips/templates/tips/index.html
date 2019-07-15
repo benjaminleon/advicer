@@ -1,57 +1,40 @@
+{% extends 'base.html' %}
 {% load static %}
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
 
-<body>
-    <title>Get Started</title>
+{% block title %}Home{% endblock %}
 
+{% block content %}
     <div class="container">
-        <header>
-            <nav>
-                <a href="#" id="hamburger">
-                    <img src="{% static 'tips/images/hamburger.svg' %}" alt="toggle menu" class="menu" id="menu">
-                </a>
-
-                <ul class="show-desktop hide-mobile" id="nav">
-                    <li><a href="#">Recommended for me</a></li>
-                    <li><a href="#">My rated movies</a></li>
-                    <li><a href="#">Common movies</a></li>
-                    <li><a href="#">Log out</a></li>
-                </ul>
-            </nav>
-
-            <form action="{% url 'tips:search_results' %}" method="get" id="search_bar">
-                <input name="q" type="text" placeholder="Search movie..." >
-            </form>
-        </header>
 
         <div class="section">
 
-                <div class="get_started">
-                    Let's get started!</h1>
+            <div class="get_started">
+                Let's get started!</h1>
+            </div>
+
+            <div id="onetwothree">
+                <div class="step_1">
+                    <img src="{% static 'tips/images/guide_arrow.svg' %}" id="guide_arrow">
+                    <p>1.</p>
+                    <p id="text">Rate both movies you've enjoyed and movies you've disliked</p>
+                </div>
+                <div class="step_2">
+                    <p>2.</p>
+                    <p id="text">The more movies you rate, the better</p>
                 </div>
 
-                <div id="onetwothree">
-                    <div class="step_1">
-                        <img src="{% static 'tips/images/guide_arrow.svg' %}" id="guide_arrow">
-                        <p>1.</p>
-                        <p id="text">Rate both movies you've enjoyed and movies you've disliked</p>
-                    </div>
-                    <div class="step_2">
-                        <p>2.</p>
-                        <p id="text">The more movies you rate, the better</p>
-                    </div>
-
-                    <div class="step_3">
-                        <p>3.</p>
-                        <div id="text">
-                            <p>Can't remember what you've seen?<br>
-                                <a href="#" id=popular>Have a look at the movies others have rated!</a>
-                            </p>
-                        </div>
+                <div class="step_3">
+                    <p>3.</p>
+                    <div id="text">
+                        <p>Can't remember what you've seen?<br>
+                            <a href="#" id=popular>Have a look at the movies others have rated!</a>
+                        </p>
                     </div>
                 </div>
+            </div>
             <img src="{% static 'tips/images/triangle.svg' %}" id="triangle">
 
         </div>
@@ -97,4 +80,5 @@
             <p>There are no ratings at all.</p>
         {% endif %}
     -->
-</body>
+
+{% endblock %}

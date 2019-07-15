@@ -1,0 +1,31 @@
+{% load static %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>{% block title %}{% endblock %}</title>
+<html>
+    <body>
+        <header>
+            <nav>
+                <a href="#" id="hamburger">
+                    <img src="{% static 'tips/images/hamburger.svg' %}" alt="toggle menu" class="menu" id="menu">
+                </a>
+
+                <ul class="show-desktop hide-mobile" id="nav">
+                    <li><a href="#">Recommended for me</a></li>
+                    <li><a href="#">My rated movies</a></li>
+                    <li><a href="#">Common movies</a></li>
+                    <li><a href="#">Log out</a></li>
+                </ul>
+            </nav>
+
+            <form action="{% url 'tips:search_results' %}" method="get" id="search_bar">
+                <input name="q" type="text" placeholder="Search movie..." >
+            </form>
+        </header>
+        {% block content %}
+        {% endblock %}
+    </body>
+
+</html>
