@@ -1,8 +1,22 @@
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
+
 <title>Sign up</title>
 {% block content %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign Up</button>
-    </form>
-    {% endblock %}
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+
+        {% for error in field.errors %}
+        <p id="signup_error">{{ error }}</p>
+        {% endfor %}
+    </p>
+{% endfor %}
+    <button type="submit">Sign Up</button>
+</form>
+{% endblock %}

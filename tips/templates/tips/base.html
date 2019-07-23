@@ -21,7 +21,7 @@
             </nav>
 
             <form action="{% url 'tips:search_results' %}" method="get" id="search_bar">
-                <input name="q" type="text" placeholder="Search movie..." >
+                <input name="q" type="text" id="search_box">
             </form>
         </header>
         {% block content %}

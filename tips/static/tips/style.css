@@ -3,7 +3,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
     color: white;
-    background: #3f3f3f;
+    background: #303030;
 }
 
 p {
@@ -36,7 +36,16 @@ header {
 
 #search_bar input {
     width: 100%;
-    border: 1px solid #303030;
+}
+
+#search_box {
+    border-radius: 2px;
+    border: 0;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 12px 20px
+                rgba(0, 0, 0, 0.2),
+                0px 9px 12px
+                rgba(0, 0, 0, 0.15);
 }
 
 .section {
@@ -44,17 +53,22 @@ header {
     margin: 0.5em;
     padding-right: 0.5em;
     padding-bottom: 4em;
-    font-size: 17px;
-    background-color: #303030;
+    font-size: 16px;
+    background-color: #424242;
+    border-radius: 3px;
+    box-shadow: 0px 15px 12px
+                rgba(0, 0, 0, 0.22),
+                0px 19px 38px
+                rgba(0, 0, 0, 0.3);
 }
 
 .headline {
     position: relative;
     top: 1em;
     text-align: center;
-    font-weight: 800;
-    font-size: 24px;
-    line-height: 26px;
+    font-weight: bold;
+    line-height: 20px;
+    opacity: 0.8;
 }
 
 #guide_arrow {
@@ -69,6 +83,7 @@ header {
     top: 2em;
     left: 0.5em;
     margin-right: 0.5em;
+    opacity: 0.8;
 }
 
 .step_1 {
@@ -102,7 +117,8 @@ header {
 }
 
 .section #popular {
-    color: #80CBC4;
+    color: #99E7FF;
+    opacity: 0.9;
     font-weight: 600;
     text-decoration: none;
 }
@@ -127,8 +143,8 @@ header {
 }
 
 #login_message {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: bold;
     margin: 2em auto;
 }
 
@@ -139,7 +155,8 @@ header {
 
 #account, #password {
     text-align: left;
-    font-size: 14px;
+    font-size: 16px;
+    opacity: 0.7;
 }
 
 .login_signup_btns {
@@ -158,6 +175,7 @@ header {
     border: none;
     background-color: 288BFF;
     color: white;
+    opacity: 0.9;
     cursor: pointer;
 }
 
@@ -172,11 +190,15 @@ header {
 }
 
 #forgot_pw {
-    font-size: 10px;
     text-decoration: none;
-    color: b8b8b8;
+    opacity: 0.4;
 }
 
+/************** Sign up view *************/
+#signup_error {
+    color: rgb(255, 36, 36);
+    font-weight: bold;
+}
 
 /************* Search results ************/
 
