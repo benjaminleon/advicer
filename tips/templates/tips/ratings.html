@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% block title %}Ratings{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="section">
+
+        <div class="headline">
+        {% if ratings %}
+            My ratings
+        {% else %}
+            Go ahead and rate some movies!
+        {% endif %}
+        </div>
+
+        <ul id="ratings_list">
+        {% for rating in ratings %}
+            <div class="rating">
+                <li>
+                    <div id="text">{{ rating }}</div>
+                    <img src="{% static 'tips/images/edit.svg' %}" id="edit" class="edit" alt="edit">
+                </li>
+            </div>
+        {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
+{% endblock %}

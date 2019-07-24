@@ -40,6 +40,14 @@ def index(request):
     return render(request, 'tips/index.html', context)
 
 
+def ratings(request):
+    context = {
+        'ratings': Rating.objects.filter(user = request.user),
+    }
+
+    return render(request, 'tips/ratings.html', context)
+
+
 def NewRating(request, movie_id):
     try:
         new_score = request.POST['score']

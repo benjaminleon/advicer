@@ -13,7 +13,7 @@ nav ul {
     z-index: 10;
     background: rgb(53, 49, 49);
     height: 100%;
-    width: 60%;
+    width: 70%;
 }
 
 nav ul li a {
@@ -235,4 +235,30 @@ header {
 #search_results {
     padding-top: 1em;
     font-size: 12px;
+}
+
+/*****************************************/
+.section #ratings_list {
+/*    border: solid red 1px;*/
+    padding-top: 1em;
+    margin-left: 0.5em;
+    overflow: hidden;
+}
+
+.rating {
+    /*border: solid pink 1px;*/
+    overflow: auto;
+    margin-top: 1em;
+}
+
+.rating #text {
+    /*border: solid green 1px;*/
+    max-width: 90%;
+    float: left;
+}
+
+.rating img {
+    cursor: pointer;
+    /*border: solid white 1px;*/
+    float: right;
 }
