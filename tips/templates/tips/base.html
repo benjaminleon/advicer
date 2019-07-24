@@ -1,6 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>{% block title %}{% endblock %}</title>
@@ -13,10 +14,13 @@
                 </a>
 
                 <ul class="show-desktop hide-mobile" id="nav">
-                    <li><a href="#">Recommended for me</a></li>
+                    <li id="exit" class="exit-btn">
+                        <img src="{% static 'tips/images/exit.svg' %}" alt="exit menu">
+                    </li>
+                    <li><a href="{% url 'tips:index' %}">Recommended for me</a></li>
                     <li><a href="#">My rated movies</a></li>
                     <li><a href="#">Common movies</a></li>
-                    <li><a href="#">Log out</a></li>
+                    <li><a href="{% url 'logout' %}">Log out</a></li>
                 </ul>
             </nav>
 
@@ -26,6 +30,21 @@
         </header>
         {% block content %}
         {% endblock %}
+    <script>
+        var menu = document.getElementById('menu');
+        var nav = document.getElementById('nav');
+        var exit = document.getElementById('exit');
+
+        menu.addEventListener('click', function(e) {
+            nav.classList.toggle('hide-mobile');
+            e.preventDefault();
+        })
+
+        exit.addEventListener('click', function(e) {
+            nav.classList.add('hide-mobile');
+            e.preventDefault();
+        })
+    </script>
     </body>
 
 </html>

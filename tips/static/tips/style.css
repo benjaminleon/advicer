@@ -6,6 +6,36 @@ body {
     background: #303030;
 }
 
+nav ul {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background: rgb(53, 49, 49);
+    height: 100%;
+    width: 60%;
+}
+
+nav ul li a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    padding: 1em 2em;
+    background-color: 1f1f1f;
+}
+nav ul li a:hover {
+    background-color: #99E7FF;
+    color: black;
+    font-weight: bold;
+}
+
+.exit-btn img {
+    fill: white;
+    width: 5em;
+    margin-bottom: -1em;
+    cursor: pointer;
+}
+
 p {
     font-size: .9em;
     line-height: 1.6em;
