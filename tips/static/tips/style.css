@@ -234,7 +234,10 @@ header {
 
 #search_results {
     padding-top: 1em;
-    font-size: 12px;
+}
+
+#search_results #edit {
+    cursor: pointer;
 }
 
 /*****************************************/
