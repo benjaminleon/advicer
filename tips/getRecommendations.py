@@ -4,8 +4,14 @@ MAX_SCORE = 5
 
 
 def getRecommendations(current_user_name, users_and_ratings):
+    if currentUserHasNoRatings(current_user_name, users_and_ratings):
+        return []
     most_similar_users = getMostSimilarUsers(current_user_name, users_and_ratings)
     return getUnseenTopMoviesFrom(most_similar_users, users_and_ratings, current_user_name)
+
+
+def currentUserHasNoRatings(current_user_name, users_and_ratings):
+    return not users_and_ratings[current_user_name]
 
 
 def getMostSimilarUsers(current_user_name, users_and_ratings):
