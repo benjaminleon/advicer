@@ -7,9 +7,23 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
+
     <div class="container">
 
         <div class="section">
+            {% if recommendations %}
+                <div class="headline">
+                    Recommended for me
+                </div>
+
+                <div id="main_content">
+                    {% for recommendation in recommendations %}
+                        <li>{{ recommendation }}</li>
+                    {% endfor %}
+                </div>
+
+            {% else %}
 
             <div class="headline">
                 Let's get started!
@@ -36,10 +50,11 @@
                 </div>
             </div>
             <!--<img src="{% static 'tips/images/triangle.svg' %}" id="triangle">-->
-
+            {% endif %}
         </div>
 
     </div>
+
     <!--
         <p><a href="{% url 'logout' %}">Logout</a></p>
         <p><a href="{% url 'password_reset' %}">Reset password</a></p>
