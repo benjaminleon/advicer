@@ -25,7 +25,7 @@
             <div class="rating">
                 <li>
                     <div id="text">{{ rating }}</div>
-                    <img src="{% static 'tips/images/edit.svg' %}" id="edit" class="edit" alt="edit">
+                    <img src="{% static 'tips/images/edit.svg' %}" id="edit{{ forloop.counter }}" class="edit">
                 </li>
             </div>
         {% endfor %}
@@ -34,4 +34,13 @@
     </div>
 
 </div>
+
+<script>
+    var edit_buttons = document.getElementsByClassName("edit");
+    for (var i = 0; i < edit_buttons.length; i++) {
+        edit_buttons[i].addEventListener('click', function(e) {
+            alert(this.id);
+        })
+    }
+</script>
 {% endblock %}
