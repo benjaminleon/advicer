@@ -100,12 +100,33 @@ class SearchResultsView(generic.ListView):
     template_name = 'tips/search_results.html'
 
     def get_queryset(self):
+        MAX_NR_OF_MOVIES = 20
         query = self.request.GET.get('q')
-        object_list = Movie.objects.filter(
+        matched_movies = Movie.objects.filter(
             Q(title__icontains=query) | Q(release_year__icontains=query))
+        matched_movies = matched_movies[:MAX_NR_OF_MOVIES]
 
+        users_ratings = Rating.objects.filter(user=self.request.user)
+
+        object_list = []
+        for matched_movie in matched_movies:
+            print(f'matched_movie: {matched_movie}')
+            rating_found = False
+            for rating in users_ratings:
+                rating_found = False
+                print(rating.movie.__str__())
+                if rating.movie.__str__() == matched_movie.__str__():
+                    object_list.append({'movie': matched_movie, 'rating': rating})
+                    rating_found = True
+                    break
+
+            if not rating_found:
+                object_list.append({'movie': matched_movie, 'rating': None})
+
+        print(f'object_list: {object_list}')
         MAX_NR_OF_MOVIES_TO_DISPLAY = 20
         return object_list[:MAX_NR_OF_MOVIES_TO_DISPLAY]
+
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)

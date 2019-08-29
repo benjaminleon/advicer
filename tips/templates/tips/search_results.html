@@ -20,10 +20,11 @@
     <div id="main_content">
     {% if object_list %}
         <ul id="search_results">
-            {% for movie in object_list %}
-            <li>{{ movie }}</li>
+            {% for element in object_list %}
+            <li>{{ element.movie }}</li>
             <img src="{% static 'tips/images/edit.svg' %}" id="edit" class="edit" alt="edit">
-            <form action="{% url 'tips:new_rating' movie.id %}" method="POST">
+
+            <form action="{% url 'tips:new_rating' element.movie.id %}" method="POST">
                 {% csrf_token %}
                 <div id="show_on_click">
                 {% for score in choosable_scores %}
@@ -33,6 +34,11 @@
                 </div>
                 <input type="submit">
             </form>
+            {% if element.rating != None %}
+            <li>
+                Option to clear rating
+            </li>
+            {% endif %}
 
             {% endfor %}
         </ul>
