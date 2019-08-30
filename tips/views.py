@@ -68,7 +68,7 @@ def SetRating(request, movie_id):
     rating.score = new_score
     rating.save()
 
-    return HttpResponseRedirect(reverse('tips:index'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def UpdateRating(request, rating_id):
@@ -82,7 +82,7 @@ def UpdateRating(request, rating_id):
     rating.score = new_score
     rating.save()
 
-    return HttpResponseRedirect(reverse('tips:index'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def DeleteRatingByMovie(request, movie_id):
@@ -95,8 +95,7 @@ def DeleteRatingByMovie(request, movie_id):
 def DeleteRating(request, rating_id):
     rating = get_object_or_404(Rating, id=rating_id)
     rating.delete()
-    return HttpResponseRedirect(reverse('tips:index'))
-
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 class SearchResultsView(generic.ListView):
     model = Movie
