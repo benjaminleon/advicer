@@ -22,7 +22,6 @@
         <ul id="search_results">
             {% for element in object_list %}
                 <li>{{ element.movie }}</li>
-                <img src="{% static 'tips/images/edit.svg' %}" id="edit" class="edit" alt="edit">
 
                 <form action="{% url 'tips:set_rating' element.movie.id %}" method="POST">
                     {% csrf_token %}
