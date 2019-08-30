@@ -21,25 +21,25 @@
     {% if object_list %}
         <ul id="search_results">
             {% for element in object_list %}
-            <li>{{ element.movie }}</li>
-            <img src="{% static 'tips/images/edit.svg' %}" id="edit" class="edit" alt="edit">
+                <li>{{ element.movie }}</li>
+                <img src="{% static 'tips/images/edit.svg' %}" id="edit" class="edit" alt="edit">
 
-            <form action="{% url 'tips:new_rating' element.movie.id %}" method="POST">
-                {% csrf_token %}
-                <div id="show_on_click">
-                {% for score in choosable_scores %}
-                    <input type="radio" name="score" id="{{ score }}"
-                    value="{{ score }}">
-                {% endfor %}
-                </div>
-                <input type="submit">
-            </form>
-            {% if element.rating != None %}
-            <li>
-                Option to clear rating
-            </li>
-            {% endif %}
-
+                <form action="{% url 'tips:new_rating' element.movie.id %}" method="POST">
+                    {% csrf_token %}
+                    <div id="show_on_click">
+                    {% for score in choosable_scores %}
+                        <input type="radio" name="score" id="{{ score }}"
+                        value="{{ score }}">
+                    {% endfor %}
+                    </div>
+                    <input type="submit" value="submit">
+                </form>
+                {% if element.rating != None %}
+                    <form action="{% url 'tips:deleteByMovie' element.movie.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="clear">
+                    </form>
+                {% endif %}
             {% endfor %}
         </ul>
     {% else %}
