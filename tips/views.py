@@ -41,9 +41,12 @@ def index(request):
 
 
 def ratings(request):
+    choosable_scores = [1, 2, 3, 4, 5]
     context = {
         'ratings': Rating.objects.filter(user = request.user),
+        'choosable_scores': choosable_scores,
     }
+
 
     return render(request, 'tips/ratings.html', context)
 
