@@ -51,7 +51,7 @@ def ratings(request):
     return render(request, 'tips/ratings.html', context)
 
 
-def NewRating(request, movie_id):
+def SetRating(request, movie_id):
     try:
         new_score = request.POST['score']
     except (KeyError):

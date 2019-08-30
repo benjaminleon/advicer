@@ -24,7 +24,7 @@
                 <li>{{ element.movie }}</li>
                 <img src="{% static 'tips/images/edit.svg' %}" id="edit" class="edit" alt="edit">
 
-                <form action="{% url 'tips:new_rating' element.movie.id %}" method="POST">
+                <form action="{% url 'tips:set_rating' element.movie.id %}" method="POST">
                     {% csrf_token %}
                     <div id="show_on_click">
                     {% for score in choosable_scores %}
