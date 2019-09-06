@@ -31,8 +31,6 @@ def index(request):
 
     choosable_scores = [1, 2, 3, 4, 5]
     context = {
-        'movies': Movie.objects.all(),
-        'ratings': Rating.objects.all(),
         'recommendations': recommendations,
         'choosable_scores': choosable_scores,
     }
