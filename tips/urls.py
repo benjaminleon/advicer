@@ -10,5 +10,6 @@ urlpatterns = [
     path('deleteRating/<int:rating_id>', views.DeleteRating, name='delete'),
     path('deleteRatingByMovie/<int:movie_id>', views.DeleteRatingByMovie, name='deleteByMovie'),
     path('search/', login_required(views.SearchResultsView.as_view(), redirect_field_name=None), name='search_results'),
+    path('common/', login_required(views.common_movies, redirect_field_name=None), name='common'),
     path('ratings/', login_required(views.ratings, redirect_field_name=None), name='ratings'),
 ]

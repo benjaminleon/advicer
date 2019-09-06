@@ -40,13 +40,29 @@ def index(request):
     return render(request, 'tips/index.html', context)
 
 
+def common_movies(request):
+    ratings = Rating.objects.all()
+    rating_count = {}
+    for rating in ratings:
+        if rating.movie.title in rating_count:
+            rating_count[rating.movie.title] += 1
+        else:
+            rating_count[rating.movie.title] = 1
+
+    common_movies = sorted(rating_count, key=rating_count.get, reverse=True)
+    context = {
+        'common_movies': common_movies
+    }
+
+    return render(request, 'tips/common_movies.html', context)
+
+
 def ratings(request):
     choosable_scores = [1, 2, 3, 4, 5]
     context = {
         'ratings': Rating.objects.filter(user = request.user),
         'choosable_scores': choosable_scores,
     }
-
 
     return render(request, 'tips/ratings.html', context)
 
