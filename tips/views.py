@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from .models import Movie, Rating
 from django.contrib.auth import get_user_model
 from tips.getRecommendations import getRecommendations
+import re
 
 MAX_NR_OF_RESULTS = 20
 choosable_scores = [1, 2, 3, 4, 5]
@@ -29,11 +30,21 @@ def index(request):
         users_and_ratings[user.get_username()] = movies_and_scores
 
     current_user_name = request.user.get_username()
-    recommendations = getRecommendations(current_user_name, users_and_ratings)
+    rec_titles_and_years = getRecommendations(current_user_name, users_and_ratings)
+
+    rec_titles = []
+    rec_release_years = []
+    for rec_title_and_release_year in rec_titles_and_years:
+        m = re.search(r"(.*) \((\d+)\)", rec_title_and_release_year)
+        rec_titles.append(m.group(1))
+        rec_release_years.append(m.group(2))
+
+    rec_movies = Movie.objects.filter(Q(
+        title__in=rec_titles, release_year__in=rec_release_years))
 
     choosable_scores = [1, 2, 3, 4, 5]
     context = {
-        'recommendations': recommendations,
+        'recommendations': rec_movies,
         'choosable_scores': choosable_scores,
     }
 
@@ -129,7 +140,7 @@ class SearchResultsView(generic.ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        matched_movies = Movie.objects.filter(Q(title__icontains=query))
+        matched_movies = Movie.objects.filter(Q(title=query))
         matched_movies = matched_movies[:MAX_NR_OF_RESULTS]
 
         users_ratings = Rating.objects.filter(user=self.request.user)
