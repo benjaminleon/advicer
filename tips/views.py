@@ -9,6 +9,8 @@ from .models import Movie, Rating
 from django.contrib.auth import get_user_model
 from tips.getRecommendations import getRecommendations
 
+MAX_NR_OF_RESULTS = 20
+choosable_scores = [1, 2, 3, 4, 5]
 
 def index(request):
     User = get_user_model()
@@ -38,19 +40,19 @@ def index(request):
     return render(request, 'tips/index.html', context)
 
 
-def common_movies(request):
+def CommonMovies(request):
     ratings = Rating.objects.all()
     rating_count = {}
     for rating in ratings:
-        if rating.movie.__str__() in rating_count:
-            rating_count[rating.movie.__str__()] += 1
+        if rating.movie in rating_count:
+            rating_count[rating.movie] += 1
         else:
-            rating_count[rating.movie.__str__()] = 1
+            rating_count[rating.movie] = 1
 
     common_movies = sorted(rating_count, key=rating_count.get, reverse=True)
 
     users_ratings = Rating.objects.filter(user = request.user)
-    users_movies = [rating.movie.__str__() for rating in users_ratings]
+    users_movies = [rating.movie for rating in users_ratings]
 
     already_seen = set(common_movies) & set(users_movies)
 
@@ -58,7 +60,8 @@ def common_movies(request):
         common_movies.remove(seen)
 
     context = {
-        'common_movies': common_movies
+        'common_movies': common_movies,
+        'choosable_scores': choosable_scores,
     }
 
     return render(request, 'tips/common_movies.html', context)
@@ -125,11 +128,10 @@ class SearchResultsView(generic.ListView):
     template_name = 'tips/search_results.html'
 
     def get_queryset(self):
-        MAX_NR_OF_MOVIES = 20
         query = self.request.GET.get('q')
         matched_movies = Movie.objects.filter(
             Q(title__icontains=query) | Q(release_year__icontains=query))
-        matched_movies = matched_movies[:MAX_NR_OF_MOVIES]
+        matched_movies = matched_movies[:MAX_NR_OF_RESULTS]
 
         users_ratings = Rating.objects.filter(user=self.request.user)
 
@@ -149,11 +151,10 @@ class SearchResultsView(generic.ListView):
                 object_list.append({'movie': matched_movie, 'rating': None})
 
         print(f'object_list: {object_list}')
-        MAX_NR_OF_MOVIES_TO_DISPLAY = 20
-        return object_list[:MAX_NR_OF_MOVIES_TO_DISPLAY]
+        return object_list[:MAX_NR_OF_RESULTS]
 
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['choosable_scores'] = [1, 2, 3, 4, 5]
+        context['choosable_scores'] = choosable_scores
         return context
