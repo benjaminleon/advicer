@@ -129,8 +129,7 @@ class SearchResultsView(generic.ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        matched_movies = Movie.objects.filter(
-            Q(title__icontains=query) | Q(release_year__icontains=query))
+        matched_movies = Movie.objects.filter(Q(title__icontains=query))
         matched_movies = matched_movies[:MAX_NR_OF_RESULTS]
 
         users_ratings = Rating.objects.filter(user=self.request.user)
