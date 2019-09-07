@@ -42,12 +42,21 @@ def common_movies(request):
     ratings = Rating.objects.all()
     rating_count = {}
     for rating in ratings:
-        if rating.movie.title in rating_count:
-            rating_count[rating.movie.title] += 1
+        if rating.movie.__str__() in rating_count:
+            rating_count[rating.movie.__str__()] += 1
         else:
-            rating_count[rating.movie.title] = 1
+            rating_count[rating.movie.__str__()] = 1
 
     common_movies = sorted(rating_count, key=rating_count.get, reverse=True)
+
+    users_ratings = Rating.objects.filter(user = request.user)
+    users_movies = [rating.movie.__str__() for rating in users_ratings]
+
+    already_seen = set(common_movies) & set(users_movies)
+
+    for seen in already_seen:
+        common_movies.remove(seen)
+
     context = {
         'common_movies': common_movies
     }
