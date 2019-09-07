@@ -66,7 +66,7 @@ def getUnseenTopMoviesFrom(most_similar_users, users_and_ratings, current_user_n
         else:
             debugPrint(f'{user} didn\'t have any movies with high enough rating')
 
-    return ["Rate more movies and ask your friends to do the same to get recommendations :)"]
+    return []
 
 
 def getTopMoviesFrom(user, users_and_ratings):
