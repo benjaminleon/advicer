@@ -1,10 +1,9 @@
 ## Get movie recommendations based on your taste 
-Users make ratings between 1 - 5 on movies that they've seen. 
-
-You get recommendations from other users who rate movies similar to you.
+Users rate movies that they've seen, and get recommendations from other users who rate movies similarly.
 
 The problem that is tackled here is that in other services like imdb and rotten tomatoes,
-a high rating from another user always brings up the average score on the movie. The idea here is that we should ignore votes from users who do not share our taste in general. 
+a high rating from another user always brings up the average score on the movie.
+The idea is that ratings from users who do not share our taste should be ignored. 
 
 
 ### Getting started with a local environment
