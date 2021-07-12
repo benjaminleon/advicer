@@ -38,14 +38,14 @@ Get started with the admin user "ben" with password "ben". The other users also 
 ## Contributing
 This project needs lots of help in its current state and contributing in any way is welcome. Here are some recommended topics for inspiration:
 * Search
-  * Have the result list populate while typing
-  * When searching for "A", IMDB returns 3 movies named "A" but this site returns random movies that has an "A" in their titles
+  * Have the result list populate while typing.
+  * When searching for "A", IMDB returns 3 movies named "A" but this site returns random movies that has an "A" in their titles.
 * Associate images with movie titles
-  * Find images for as many titles as possible
-  * Add images to the database
-  * Show images together with the titles
+  * Find images for as many titles as possible.
+  * Add images to the database.
+  * Show images together with the titles.
 * Front end
-  * Either make a new design from scratch or make the site look more like what's proposed in [design.pds](design.pdf)
+  * Either make a new design from scratch or make the site look more like what's proposed in [design.pds](design.pdf).
 * Domain name
     * The site needs a domain name. Filmtips.xyz was used in the proof of concept  and could work for the next phase even though the .xyz seems fishy and might make people wary about visiting. Filmtips&#46;com demands way too much money.
 * Database design
@@ -53,13 +53,15 @@ This project needs lots of help in its current state and contributing in any way
     * Is it the right choice?
     * Are there better ways of organizing the data, than what's done now with Movies, Ratings and Users?
 * Filter irrelevant movies
-  * Most likely nobody will ever rate "Don Álvaro o la fuerza del sino (1908)" so it can safely be removed along with other old movies
+  * Most likely nobody will ever rate "Don Álvaro o la fuerza del sino (1908)" so it can safely be removed along with other old movies.
 * Automatic database upgrades
+  * New titles are released every day, and the process of importing them into this project has to be automated.
 * Page scaling for devices with different screen sizes
   * It looks kind of ok for mobile devices, but not for larger screens.
 * Sign up process
   * How can it be designed to be easier/faster for the users?
-* Importing ratings from other sites
+* Importing ratings from other sites.
+  * Make it easier for people to join by enabling them to import lots of ratings they've already made at other sites.
 
 * Algorithm improvements
   * Place users at the average score of an unseen movie instead of at the middle score 3?
