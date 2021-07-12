@@ -1,18 +1,22 @@
-## Get movie recommendations based on your taste 
+## Get movie recommendations based on your taste
 Users rate movies that they've seen, and get recommendations from other users who rate movies similarly.
 
 The problem that is tackled here is that in other services like imdb and rotten tomatoes,
 a high rating from another user always brings up the average score on the movie.
-The idea is that ratings from users who do not share our taste should be ignored. 
+The idea is that ratings from users who do not share our taste should be ignored.
+
+[](https://github.com/benjaminleon/advicer/blob/master/concept.png)
 
 
-### Getting started with a local environment
+## Get started
+#
+
 * Make a virtual environment `python -m venv env`
 * Activate the virtual environment with CMD `env\Scripts\activate` (Deactivate with `deactivate`)
 * Install requirements `pip install -r requirements.txt`
 
 * Add the following to a file called `.env`
-    
+
 
     SECRET_KEY=rqr_cjv4igscyu8&&(0ce(=sy=f2)p=f_wn&@0xsp7m$@!kp=d
     DEBUG=True
@@ -22,7 +26,16 @@ The idea is that ratings from users who do not share our taste should be ignored
 
 * Run `python manage.py migrate`
 * Run `python manage.py runserver`
-* Play around at http://127.0.0.1:8000/ or http://127.0.0.1:8000/admin/
+* Play around at http://127.0.0.1:8000/ or http://127.0.0.1:8000/admin/ (admin page is slow, shouldn't have added that many movies to the sqlite db)
+
+
+## How it works
+There are three database related entities: Ratings, Users and Movies. All of which can be viewed and modified at the admin page. Get started with the admin user "ben" with the password "ben". The other users also has the same password as their name, e.g. "mac, mac".
+
+
+
+
+## Contributing
 
 #
 
