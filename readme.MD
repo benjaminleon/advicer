@@ -1,16 +1,14 @@
 # Get movie recommendations based on your taste
-Users rate movies that they've seen, and get recommendations from other users who rate movies similarly.
+Users rate movies they've seen, and get recommendations from other users who rate movies similarly.
 
-The problem that is tackled here is that in other services like imdb and rotten tomatoes,
-a high rating from any other user always brings up the average score on the movie.
-The idea here is that ratings from users who do not share our taste should be ignored.
+The problem that is tackled here is that in other services like IMDB and Rotten Tomatoes, a high rating from any other user always brings up the average score on the movie. The idea here is that ratings from users who do not share our taste should be ignored.
 
-## The idea
+## Who shares your taste in movies?
 Every user has a position in the space formed by all the movies in the database, see the illustration below with  2 movies:
 
 ![concept](concept_pic.png "concept drawing")
 
-Sid and Andy will be recommended each other's favorite movies. The same goes for Hanna and Molly. Mac has seen the Lion King but not Toy Story and is automatically placed on the Toy Story scale at the middle score 3 and ends up closest to Sid.
+Hanna and Molly will be recommended each other's favorite movies. The same goes for Sid and Andy. Mac has seen the Lion King but not yet Toy Story and is automatically placed on the Toy Story scale at the middle score 3 and ends up closest to Sid.
 
 ## Goal of the project
 After involving 50 users with 50 movies each, start getting recommendations that beats those you get from IMDB, Netflix or even friends that thought they knew you.
@@ -41,18 +39,31 @@ Get started with the admin user "ben" with password "ben". The other users also 
 ## Contributing
 This project needs lots of help in its current state and contributing in any way is welcome. Here are some recommended topics for inspiration:
 * Search
-* Domain name
-    * The site needs a domain name to be hosted at. filmtips.xyz was used in the poc-state and might work for the next phase, filmtips.com demands too much money.
+  * Have the result list populate while typing
+  * When searching for "A", IMDB returns 3 movies named "A" but this site returns random movies that has an "A" in their titles
 * Associate images with movie titles
-* Filter irrelevant irrelevant movies
-* Automatic database upgrades
-* User interface
-  * All improvements welcome
-* Page scaling for devices with different screen sizes
+  * Find images for as many titles as possible
+  * Add images to the database
+  * Show images together with the titles
 * Front end
+  * Either make a new design from scratch or make the site look more like what's proposed in [design.pds](design.pdf)
+* Domain name
+    * The site needs a domain name. Filmtips.xyz was used in the proof of concept  and could work for the next phase even though the .xyz seems fishy and might make people wary about visiting. Filmtips&#46;com demands way too much money.
+* Database design
+  * The database used for the proof of concept was postgreSQL
+    * Is it the right choice?
+    * Are there better ways of organizing the data, than what's done now with Movies, Ratings and Users?
+* Filter irrelevant movies
+  * Most likely nobody will ever rate "Don Álvaro o la fuerza del sino (1908)" so it can safely be removed along with other old movies
+* Automatic database upgrades
+* Page scaling for devices with different screen sizes
+  * It looks kind of ok for mobile devices, but not for larger screens.
+* Sign up process
+  * How can it be designed to be easier/faster for the users?
+* Importing ratings from other sites
 
-Possible improvements of the algorithm:
-* Place users at the average score of an unseen movie instead of at the middle score 3?
+* Algorithm improvements
+  * Place users at the average score of an unseen movie instead of at the middle score 3?
 
 
 #
