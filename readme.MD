@@ -15,12 +15,11 @@ After involving 50 users with 50 movies each, start getting recommendations that
 
 
 ## Get started
+With Window's CMD (almost the same as with a linux shell):
 * Make a virtual environment `python -m venv env`
-* Activate the virtual environment with CMD `env\Scripts\activate` (Deactivate with `deactivate`)
+* Activate the virtual environment with `env\Scripts\activate` (Deactivate with `deactivate`)
 * Install requirements `pip install -r requirements.txt`
-
 * Add the following to a file called `.env`
-
 
     SECRET_KEY=rqr_cjv4igscyu8&&(0ce(=sy=f2)p=f_wn&@0xsp7m$@!kp=d
     DEBUG=True
@@ -64,7 +63,6 @@ This project needs lots of help in its current state and contributing in any way
 
 * Algorithm improvements
   * Place users at the average score of an unseen movie instead of at the middle score 3?
-
 
 #
 
