@@ -11,7 +11,7 @@ Every user has a position in the space formed by all the movies in the database,
 Hanna and Molly will be recommended each other's favorite movies. The same goes for Sid and Andy. Mac has seen the Lion King but not yet Toy Story and is automatically placed on the Toy Story scale at the middle score 3 and ends up closest to Sid.
 
 ## Goal of the project
-After involving 50 users with 50 movies each, start getting recommendations that beats those you get from IMDB, Netflix or even friends that thought they knew you.
+After involving 50 users with 20 movies each, start getting recommendations that beats those you get from IMDB, Netflix or even friends that thought they knew you.
 
 
 ## Get started
@@ -36,30 +36,42 @@ Get started with the admin user "ben" with password "ben". The other users also 
 
 
 ## Contributing
-This project needs lots of help in its current state and contributing in any way is welcome. Here are some recommended topics for inspiration:
+To achieve the goal of this project, the site needs to be user friendly enough to have the users stay long enough to rate enough movies. If users give up because they get frustrated with the search function, the search should have the highest priority.
+
+This list is sorted in order of estimated importance:
 * Search
   * Have the result list populate while typing.
   * When searching for "A", IMDB returns 3 movies named "A" but this site returns random movies that has an "A" in their titles.
+
 * Associate images with movie titles
   * Find images for as many titles as possible.
   * Add images to the database.
   * Show images together with the titles.
+
 * Front end
-  * Either make a new design from scratch or make the site look more like what's proposed in [design.pds](design.pdf).
+  * Make the site look more like what's proposed in [design.pdf](design.pdf).
+  * Make a new design from scratch
+
+* Automatic database upgrades
+  * New titles are released every day, and the process of importing them into this project should be automated.
+
+* Page scaling for devices with different screen sizes
+  * It looks kind of ok for mobile devices, but not for larger screens.
+
+* Sign up process
+  * How can it be designed to be easier/faster for the users?
+
 * Domain name
     * The site needs a domain name. Filmtips.xyz was used in the proof of concept  and could work for the next phase even though the .xyz seems fishy and might make people wary about visiting. Filmtips&#46;com demands way too much money.
+
+* Filter irrelevant movies
+  * Most likely nobody will ever rate "Don Álvaro o la fuerza del sino (1908)" so it can safely be removed along with other old movies.
+
 * Database design
   * The database used for the proof of concept was postgreSQL
     * Is it the right choice?
     * Are there better ways of organizing the data, than what's done now with Movies, Ratings and Users?
-* Filter irrelevant movies
-  * Most likely nobody will ever rate "Don Álvaro o la fuerza del sino (1908)" so it can safely be removed along with other old movies.
-* Automatic database upgrades
-  * New titles are released every day, and the process of importing them into this project has to be automated.
-* Page scaling for devices with different screen sizes
-  * It looks kind of ok for mobile devices, but not for larger screens.
-* Sign up process
-  * How can it be designed to be easier/faster for the users?
+
 * Importing ratings from other sites.
   * Make it easier for people to join by enabling them to import lots of ratings they've already made at other sites.
 
