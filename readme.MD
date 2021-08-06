@@ -22,11 +22,16 @@ With Window's CMD (almost the same as with a linux shell):
 * Add the following to a file called `.env`
 
     SECRET_KEY=rqr_cjv4igscyu8&&(0ce(=sy=f2)p=f_wn&@0xsp7m$@!kp=d
+
     DEBUG=True
+
     ALLOWED_HOSTS=.localhost,127.0.0.1
+
     DATABASE_URL=sqlite:///db.sqlite3
+
     EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 
+* Run `python manage.py makemigrations`
 * Run `python manage.py migrate`
 * Run `python manage.py runserver`
 * Play around at http://127.0.0.1:8000/ or http://127.0.0.1:8000/admin/ (admin page is slow, shouldn't have added that many movies to the sqlite db)
