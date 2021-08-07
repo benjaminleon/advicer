@@ -14,7 +14,7 @@ class Movie(models.Model):
     release_year = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.title + " (" + str(self.release_year) + ")"
+        return f"{self.title} ({self.release_year})"
 
 
 class Rating(models.Model):
@@ -23,7 +23,7 @@ class Rating(models.Model):
     score = models.IntegerField(default=0, validators=[MaxValueValidator(5)])
 
     def __str__(self):
-        return "{} got score {}/5 by {}".format(self.movie.__str__(), str(self.score), self.user)
+        return f"{self.movie.__str__()} got score {self.score}/5 by {self.user}"
 
     class Meta:
-        unique_together = ('movie', 'user')
+        unique_together = ("movie", "user")

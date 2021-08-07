@@ -7,21 +7,22 @@ from django.db.models import Q
 from django.shortcuts import redirect
 from .models import Movie, Rating
 from django.contrib.auth import get_user_model
-from tips.getRecommendations import getRecommendations
+from tips.get_recommendations import get_recommendations
 import re
 
 MAX_NR_OF_RESULTS = 20
-choosable_scores = [1, 2, 3, 4, 5]
+CHOOSABLE_SCORES = [1, 2, 3, 4, 5]
+
 
 def index(request):
-    User = get_user_model()
+    user = get_user_model()
 
     # Extract the relevant information from the models to make the
     # recommendation algorithm agnostic about Django
     users_and_ratings = {}
-    users = User.objects.all()
+    users = user.objects.all()
     for user in users:
-        ratings = Rating.objects.filter(user = user)
+        ratings = Rating.objects.filter(user=user)
 
         movies_and_scores = {}
         for rating in ratings:
@@ -30,7 +31,7 @@ def index(request):
         users_and_ratings[user.get_username()] = movies_and_scores
 
     current_user_name = request.user.get_username()
-    rec_titles_and_years = getRecommendations(current_user_name, users_and_ratings)
+    rec_titles_and_years = get_recommendations(current_user_name, users_and_ratings)
 
     rec_titles = []
     rec_release_years = []
@@ -39,19 +40,19 @@ def index(request):
         rec_titles.append(m.group(1))
         rec_release_years.append(m.group(2))
 
-    rec_movies = Movie.objects.filter(Q(
-        title__in=rec_titles, release_year__in=rec_release_years))
+    rec_movies = Movie.objects.filter(
+        Q(title__in=rec_titles, release_year__in=rec_release_years)
+    )
 
-    choosable_scores = [1, 2, 3, 4, 5]
     context = {
-        'recommendations': rec_movies,
-        'choosable_scores': choosable_scores,
+        "recommendations": rec_movies,
+        "choosable_scores": CHOOSABLE_SCORES,
     }
 
-    return render(request, 'tips/index.html', context)
+    return render(request, "tips/index.html", context)
 
 
-def CommonMovies(request):
+def common_movies(request):
     ratings = Rating.objects.all()
     rating_count = {}
     for rating in ratings:
@@ -60,39 +61,38 @@ def CommonMovies(request):
         else:
             rating_count[rating.movie] = 1
 
-    common_movies = sorted(rating_count, key=rating_count.get, reverse=True)
+    sorted_common_movies = sorted(rating_count, key=rating_count.get, reverse=True)
 
-    users_ratings = Rating.objects.filter(user = request.user)
+    users_ratings = Rating.objects.filter(user=request.user)
     users_movies = [rating.movie for rating in users_ratings]
 
-    already_seen = set(common_movies) & set(users_movies)
+    already_seen = set(sorted_common_movies) & set(users_movies)
 
     for seen in already_seen:
-        common_movies.remove(seen)
+        sorted_common_movies.remove(seen)
 
     context = {
-        'common_movies': common_movies,
-        'choosable_scores': choosable_scores,
+        "common_movies": sorted_common_movies,
+        "choosable_scores": CHOOSABLE_SCORES,
     }
 
-    return render(request, 'tips/common_movies.html', context)
+    return render(request, "tips/common_movies.html", context)
 
 
 def ratings(request):
-    choosable_scores = [1, 2, 3, 4, 5]
     context = {
-        'ratings': Rating.objects.filter(user = request.user),
-        'choosable_scores': choosable_scores,
+        "ratings": Rating.objects.filter(user=request.user),
+        "choosable_scores": CHOOSABLE_SCORES,
     }
 
-    return render(request, 'tips/ratings.html', context)
+    return render(request, "tips/ratings.html", context)
 
 
-def SetRating(request, movie_id):
+def set_rating(request, movie_id):
     try:
-        new_score = request.POST['score']
-    except (KeyError):
-        return redirect('tips:index')
+        new_score = request.POST["score"]
+    except KeyError:
+        return redirect("tips:index")
 
     print("movie_id: {}".format(movie_id))
     movie = get_object_or_404(Movie, id=movie_id)
@@ -105,41 +105,42 @@ def SetRating(request, movie_id):
     rating.score = new_score
     rating.save()
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
 
-def UpdateRating(request, rating_id):
+def update_rating(request, rating_id):
     try:
-        new_score = request.POST['score']
-    except (KeyError):
-        return redirect('tips:index')
+        new_score = request.POST["score"]
+    except KeyError:
+        return redirect("tips:index")
 
     print("rating_id: {}".format(rating_id))
     rating = get_object_or_404(Rating, id=rating_id)
     rating.score = new_score
     rating.save()
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
 
 
-def DeleteRatingByMovie(request, movie_id):
+def delete_rating_by_movie(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
     rating = Rating.objects.filter(movie=movie, user=request.user)
     rating.delete()
-    return HttpResponseRedirect(reverse('tips:index'))
+    return HttpResponseRedirect(reverse("tips:index"))
 
 
-def DeleteRating(request, rating_id):
+def delete_rating(request, rating_id):
     rating = get_object_or_404(Rating, id=rating_id)
     rating.delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
+
 
 class SearchResultsView(generic.ListView):
     model = Movie
-    template_name = 'tips/search_results.html'
+    template_name = "tips/search_results.html"
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
+        query = self.request.GET.get("q")
         matched_movies = Movie.objects.filter(Q(title__in=[query]))
         if not matched_movies:
             matched_movies = Movie.objects.filter(Q(title__icontains=query))
@@ -149,24 +150,23 @@ class SearchResultsView(generic.ListView):
 
         object_list = []
         for matched_movie in matched_movies:
-            print(f'matched_movie: {matched_movie}')
+            print(f"matched_movie: {matched_movie}")
             rating_found = False
             for rating in users_ratings:
                 rating_found = False
                 print(rating.movie.__str__())
                 if rating.movie.__str__() == matched_movie.__str__():
-                    object_list.append({'movie': matched_movie, 'rating': rating})
+                    object_list.append({"movie": matched_movie, "rating": rating})
                     rating_found = True
                     break
 
             if not rating_found:
-                object_list.append({'movie': matched_movie, 'rating': None})
+                object_list.append({"movie": matched_movie, "rating": None})
 
-        print(f'object_list: {object_list}')
+        print(f"object_list: {object_list}")
         return object_list[:MAX_NR_OF_RESULTS]
 
-
-    def get_context_data(self,**kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['choosable_scores'] = choosable_scores
+        context["choosable_scores"] = CHOOSABLE_SCORES
         return context

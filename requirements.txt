@@ -9,4 +9,3 @@ six==1.12.0
 typed-ast
 wrapt==1.11.1
 Django~=3.2.5
-
