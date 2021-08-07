@@ -21,11 +21,7 @@ def get_most_similar_users(current_user_name, users_and_ratings):
     for other_username in users_and_ratings:
         if other_username == current_user_name:
             continue
-        debug_print(
-            "\nLooking for common movies for current user {} and user {}".format(
-                current_user_name, other_username
-            )
-        )
+        debug_print(f"\nLooking for common movies for current user {current_user_name} and user {other_username}")
 
         similarity_scores[other_username] = 0
         # Find the movies this user has in common with other users

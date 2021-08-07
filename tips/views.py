@@ -2,7 +2,6 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
-from django.utils import timezone
 from django.db.models import Q
 from django.shortcuts import redirect
 from .models import Movie, Rating
@@ -94,13 +93,13 @@ def set_rating(request, movie_id):
     except KeyError:
         return redirect("tips:index")
 
-    print("movie_id: {}".format(movie_id))
+    print(f"movie_id: {movie_id}")
     movie = get_object_or_404(Movie, id=movie_id)
     rating, created = Rating.objects.update_or_create(user=request.user, movie=movie)
     if created:
-        print("Created a new rating: {}".format(rating))
+        print(f"Created a new rating: {rating}")
     else:
-        print("Rating existed: {}".format(rating))
+        print(f"Rating existed: {rating}")
 
     rating.score = new_score
     rating.save()
@@ -114,7 +113,7 @@ def update_rating(request, rating_id):
     except KeyError:
         return redirect("tips:index")
 
-    print("rating_id: {}".format(rating_id))
+    print(f"rating_id: {rating_id}")
     rating = get_object_or_404(Rating, id=rating_id)
     rating.score = new_score
     rating.save()
