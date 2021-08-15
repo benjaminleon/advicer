@@ -22,7 +22,6 @@ class TsvPreparer:
 
     @staticmethod
     def download(url, file_path):
-
         return file_path
 
     @staticmethod
@@ -33,31 +32,61 @@ class TsvPreparer:
                 shutil.copyfileobj(f_in, f_out)
 
     @staticmethod
-    def wash_tsv(input_file, output_file):
-        pass
+    def wash_tsv(input_file_name, output_file_name):
+        output_file = open(output_file_name, "w")
+        with open(input_file_name, "r", encoding="utf8") as input_file:
+            for entry in input_file.readlines():
+                splitted_entries = entry.split("\t")
+                movie_id = splitted_entries[0]
+                title_type = splitted_entries[1]
+                title = splitted_entries[3]
+                release_year = splitted_entries[5]
 
-    washed_content = ""
-    titles = []
-    release_years = []
-    tsv_file_path = sys.argv[1]
-    with open(tsv_file_path, "r") as movietsv:
-        content = movietsv.readlines()
+                if release_year.isdigit() \
+                        and title != "\\N" \
+                        and len(title) < 200 \
+                        and int(release_year) > 1939 \
+                        and title_type == "movie":
+                    output_file.write(f"{movie_id}\t{title}\t{release_year}\n")
 
-        for entry in content:
-            splitted_entry = entry.split("\t")
-            identifier = splitted_entry[0]
-            title = splitted_entry[3]
-            release_year = splitted_entry[5]
+    @staticmethod
+    def add_urls(input_file_name, output_file_name):
+        """
+        Input file is expected to be a tab separated list with "id, title, release_year":
+        tt0015724       Dama de noche   1993
+        tt0016906       Frivolinas      2014
+        """
+        import requests
+        from bs4 import BeautifulSoup
 
-            if release_year.isdigit() and title != "\\N" and len(title) < 200:
-                release_years.append(release_year)
-                titles.append(splitted_entry[3])
+        with open(input_file_name, 'r') as input_file:
+            lines = input_file.readlines()
+        assert lines
 
-    with open("washed_movies.tsv", "w") as movietsv:
-        writer = csv.writer(movietsv, delimiter="\t")
-        for index, (title, release_year) in enumerate(zip(titles, release_years)):
-            writer.writerow([index, title, release_year])
+        with open(output_file_name, 'w') as output_file:
+            for line in lines:
+                splitted_lines = line.split("\t")
+                movie_id = splitted_lines[0]
+                r = requests.get(f'https://www.imdb.com/title/{movie_id}')
+                if r:
+                    soup = BeautifulSoup(r.text, 'html.parser')
+                    if soup:
+                        url = soup.img['src']
+                        if url.startswith("//fls"):
+                            print(f"Only got a pixel for {movie_id}: {url}")
+                            url = None
+                        title = splitted_lines[1]
+                        release_year = splitted_lines[2]
+                        output_file.write(f'{movie_id}\t{title}\t{release_year}\t{url}\n')
+                        # print(f'{movie_id}\t{title}\t{release_year}\t{url}\n')
+                    else:
+                        print(f"Could not make soup from {movie_id}")
+                else:
+                    print(f"Did not find {movie_id}")
 
 
 if __name__ == "__main__":
-    TsvPreparer.run()
+    # TsvPreparer.run()
+    # TsvPreparer.wash_tsv("title.basics.tsv", "washed_movies_2.tsv")
+    TsvPreparer.add_urls(input_file_name="washed_movies_2.tsv",
+                         output_file_name="washed_movies_2_with_urls.tsv")
