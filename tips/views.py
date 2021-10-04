@@ -1,3 +1,5 @@
+import requests
+from bs4 import BeautifulSoup
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -16,8 +18,6 @@ CHOOSABLE_SCORES = [1, 2, 3, 4, 5]
 def index(request):
     user = get_user_model()
 
-    # Extract the relevant information from the models to make the
-    # recommendation algorithm agnostic about Django
     users_and_ratings = {}
     users = user.objects.all()
     for user in users:
@@ -149,15 +149,33 @@ class SearchResultsView(generic.ListView):
 
         object_list = []
         for matched_movie in matched_movies:
-            print(f"matched_movie: {matched_movie}")
+            print(f"matched_movie: {matched_movie}, {matched_movie.img_link}, {matched_movie.id}")
+            if matched_movie.img_link == "http://no_img.png":
+                print("Gonna find the url to the image")
+
+                r = requests.get(f'https://www.imdb.com/title/{matched_movie.id}')
+                if r:
+                    soup = BeautifulSoup(r.text, 'html.parser')
+                    if soup:
+                        url = soup.img['src']
+                        if url.startswith("//fls"):
+                            print(f"Only got a pixel for {matched_movie.id}: {url}")
+                        else:
+                            print(f"url: {url}")
+                    else:
+                        print("no soup")
+                else:
+                    print(f"no response for https://www.imdb.com/title/{matched_movie.id}")
+
             rating_found = False
-            for rating in users_ratings:
-                rating_found = False
-                print(rating.movie.__str__())
-                if rating.movie.__str__() == matched_movie.__str__():
-                    object_list.append({"movie": matched_movie, "rating": rating})
-                    rating_found = True
-                    break
+            # Uncomment to add the "clear" button to movies which has been rated
+            # for rating in users_ratings:
+            #     rating_found = False
+            #     print(rating.movie.__str__())
+            #     if rating.movie.__str__() == matched_movie.__str__():
+            #         object_list.append({"movie": matched_movie, "rating": rating})
+            #         rating_found = True
+            #         break
 
             if not rating_found:
                 object_list.append({"movie": matched_movie, "rating": None})
