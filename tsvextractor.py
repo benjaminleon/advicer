@@ -18,7 +18,7 @@ class TsvPreparer:
             url="https://datasets.imdbws.com/title.basics.tsv.gz", file_path=file_path
         )
         TsvPreparer.unzip(file_path)
-        TsvPreparer.wash_tsv(file_path)
+        TsvPreparer.wash_tsv(file_path, "downloaded_and_washed.tsv")
 
     @staticmethod
     def download(url, file_path):
@@ -33,11 +33,15 @@ class TsvPreparer:
 
     @staticmethod
     def wash_tsv(input_file_name, output_file_name):
-        output_file = open(output_file_name, "w")
-        with open(input_file_name, "r", encoding="utf8") as input_file:
+        default_img_url = "_"
+        output_file = open(output_file_name, "w", encoding="utf-8")
+        # output_file = open(output_file_name, "w")
+        output_file.write(f"id\ttitle\trelease_year\timdb_id\timg_url\n")
+        with open(input_file_name, "r", encoding="utf-8") as input_file:
+            internal_id = 0
             for entry in input_file.readlines():
                 splitted_entries = entry.split("\t")
-                movie_id = splitted_entries[0]
+                imdb_id = splitted_entries[0]
                 title_type = splitted_entries[1]
                 title = splitted_entries[3]
                 release_year = splitted_entries[5]
@@ -45,9 +49,11 @@ class TsvPreparer:
                 if release_year.isdigit() \
                         and title != "\\N" \
                         and len(title) < 200 \
-                        and int(release_year) > 1939 \
+                        and int(release_year) > 1950 \
                         and title_type == "movie":
-                    output_file.write(f"{movie_id}\t{title}\t{release_year}\n")
+                    output_file.write(f"{internal_id}\t{title}\t{release_year}\t{imdb_id}\t{default_img_url}\n")
+                    internal_id += 1
+        output_file.close()
 
     @staticmethod
     def add_urls(input_file_name, output_file_name):
@@ -78,7 +84,6 @@ class TsvPreparer:
                         title = splitted_lines[1]
                         release_year = splitted_lines[2]
                         output_file.write(f'{movie_id}\t{title}\t{release_year}\t{url}\n')
-                        # print(f'{movie_id}\t{title}\t{release_year}\t{url}\n')
                     else:
                         print(f"Could not make soup from {movie_id}")
                 else:
@@ -87,6 +92,6 @@ class TsvPreparer:
 
 if __name__ == "__main__":
     # TsvPreparer.run()
-    # TsvPreparer.wash_tsv("title.basics.tsv", "washed_movies_2.tsv")
-    TsvPreparer.add_urls(input_file_name="washed_movies_2.tsv",
-                         output_file_name="washed_movies_2_with_urls.tsv")
+    TsvPreparer.wash_tsv("title.basics.tsv", "ws6.tsv")
+    # TsvPreparer.add_urls(input_file_name="washed_movies_2.tsv",
+    #                      output_file_name="washed_movies_2_with_urls.tsv")

@@ -144,13 +144,13 @@ class SearchResultsView(generic.ListView):
         if not matched_movies:
             matched_movies = Movie.objects.filter(Q(title__icontains=query))
         matched_movies = matched_movies[:MAX_NR_OF_RESULTS]
-
+        print(matched_movies)
         users_ratings = Rating.objects.filter(user=self.request.user)
 
         object_list = []
         for matched_movie in matched_movies:
-            print(f"matched_movie: {matched_movie}, {matched_movie.img_link}, {matched_movie.id}")
-            if matched_movie.img_link == "http://no_img.png":
+            print(f"matched_movie: {matched_movie}, {matched_movie.img_url}, {matched_movie.id}")
+            if matched_movie.img_url == "http://no_img.png":
                 print("Gonna find the url to the image")
 
                 r = requests.get(f'https://www.imdb.com/title/{matched_movie.id}')
@@ -167,15 +167,21 @@ class SearchResultsView(generic.ListView):
                 else:
                     print(f"no response for https://www.imdb.com/title/{matched_movie.id}")
 
+            # Something like this might be used to add the url to the movie
+            # print(f"rating_id: {rating_id}")
+            # rating = get_object_or_404(Rating, id=rating_id)
+            # rating.score = new_score
+            # rating.save()
+
             rating_found = False
             # Uncomment to add the "clear" button to movies which has been rated
-            # for rating in users_ratings:
-            #     rating_found = False
-            #     print(rating.movie.__str__())
-            #     if rating.movie.__str__() == matched_movie.__str__():
-            #         object_list.append({"movie": matched_movie, "rating": rating})
-            #         rating_found = True
-            #         break
+            for rating in users_ratings:
+                rating_found = False
+                print(rating.movie.__str__())
+                if rating.movie.__str__() == matched_movie.__str__():
+                    object_list.append({"movie": matched_movie, "rating": rating})
+                    rating_found = True
+                    break
 
             if not rating_found:
                 object_list.append({"movie": matched_movie, "rating": None})

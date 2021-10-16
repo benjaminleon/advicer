@@ -12,7 +12,8 @@ class CustomUser(AbstractUser):
 class Movie(models.Model):
     title = models.CharField(max_length=200)
     release_year = models.IntegerField(default=0)
-    img_link = models.CharField(max_length=200)
+    imdb_id = models.CharField(max_length=20, default="")
+    img_url = models.CharField(max_length=200, default="")
 
     def __str__(self):
         return f"{self.title} ({self.release_year})"
@@ -26,5 +27,5 @@ class Rating(models.Model):
     def __str__(self):
         return f"{self.movie.__str__()} got score {self.score}/5 by {self.user}"
 
-    class Meta:
-        unique_together = ("movie", "user")
+    # class Meta:
+    #     unique_together = ("movie", "user")

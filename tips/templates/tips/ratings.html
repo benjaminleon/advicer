@@ -25,7 +25,7 @@
             <div class="rating">
                 <li>
                     <div id="text">{{ rating }}</div>
-                    <img src="{{ rating.movie.img_link }}"/>
+                    <img src="{{ rating.movie.img_url }}"/>
                     <br><br>
                     <form action="{% url 'tips:update_rating' rating.id %}" method="POST">
                         {% csrf_token %}
