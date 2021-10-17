@@ -13,19 +13,19 @@ class Movie(models.Model):
     title = models.CharField(max_length=200)
     release_year = models.IntegerField(default=0)
     imdb_id = models.CharField(max_length=20, default="")
-    img_url = models.CharField(max_length=200, default="")
+    img_link = models.CharField(max_length=200, default="")
 
     def __str__(self):
         return f"{self.title} ({self.release_year})"
 
 
 class Rating(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    movie = models.OneToOneField(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     score = models.IntegerField(default=0, validators=[MaxValueValidator(5)])
 
     def __str__(self):
         return f"{self.movie.__str__()} got score {self.score}/5 by {self.user}"
 
-    # class Meta:
-    #     unique_together = ("movie", "user")
+    class Meta:
+        unique_together = ("movie", "user")

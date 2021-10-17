@@ -95,6 +95,7 @@ def set_rating(request, movie_id):
 
     print(f"movie_id: {movie_id}")
     movie = get_object_or_404(Movie, id=movie_id)
+    print(f"movie: {movie}")
     rating, created = Rating.objects.update_or_create(user=request.user, movie=movie)
     if created:
         print(f"Created a new rating: {rating}")
@@ -149,23 +150,24 @@ class SearchResultsView(generic.ListView):
 
         object_list = []
         for matched_movie in matched_movies:
-            print(f"matched_movie: {matched_movie}, {matched_movie.img_url}, {matched_movie.id}")
-            if matched_movie.img_url == "http://no_img.png":
-                print("Gonna find the url to the image")
-
-                r = requests.get(f'https://www.imdb.com/title/{matched_movie.id}')
-                if r:
-                    soup = BeautifulSoup(r.text, 'html.parser')
-                    if soup:
-                        url = soup.img['src']
-                        if url.startswith("//fls"):
-                            print(f"Only got a pixel for {matched_movie.id}: {url}")
-                        else:
-                            print(f"url: {url}")
-                    else:
-                        print("no soup")
-                else:
-                    print(f"no response for https://www.imdb.com/title/{matched_movie.id}")
+            # print(f"matched_movie: {matched_movie}, {matched_movie.img_url}, {matched_movie.id}")
+            print(f"matched_movie: {matched_movie}, {matched_movie.id}")
+            # if matched_movie.img_url == "http://no_img.png":
+            #     print("Gonna find the url to the image")
+            #
+            #     r = requests.get(f'https://www.imdb.com/title/{matched_movie.id}')
+            #     if r:
+            #         soup = BeautifulSoup(r.text, 'html.parser')
+            #         if soup:
+            #             url = soup.img['src']
+            #             if url.startswith("//fls"):
+            #                 print(f"Only got a pixel for {matched_movie.id}: {url}")
+            #             else:
+            #                 print(f"url: {url}")
+            #         else:
+            #             print("no soup")
+            #     else:
+            #         print(f"no response for https://www.imdb.com/title/{matched_movie.id}")
 
             # Something like this might be used to add the url to the movie
             # print(f"rating_id: {rating_id}")
