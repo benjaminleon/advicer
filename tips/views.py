@@ -161,6 +161,10 @@ class SearchResultsView(generic.ListView):
                         url = soup.img['src']
                         if url.startswith("//fls"):
                             print(f"Only got a pixel for {matched_movie.imdb_id}: {url}")
+                            m = get_object_or_404(Movie, id=matched_movie.id)
+                            m.img_link = "failed"
+                            print("adding 'failed' to database for the movie")
+                            m.save()
                         else:
                             print(f"url: {url}")
                             matched_movie.img_link = url
