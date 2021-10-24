@@ -28,4 +28,9 @@ urlpatterns = [
         login_required(views.ratings, redirect_field_name=None),
         name="ratings",
     ),
+    path(
+        "how_it_works/",
+        login_required(views.how_it_works, redirect_field_name=None),
+        name="how_it_works",
+    )
 ]

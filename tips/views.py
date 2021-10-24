@@ -196,3 +196,7 @@ class SearchResultsView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["choosable_scores"] = CHOOSABLE_SCORES
         return context
+
+
+def how_it_works(request):
+    return render(request, "tips/how_it_works.html")

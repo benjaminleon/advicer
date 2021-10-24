@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="{% static 'tips/style.css' %}">
+
+{% block title %}How it works{% endblock %}
+
+{% block content %}
+
+<div class="section">
+    <div class="headline">How it works</div>
+    <div id="main_content">
+        Movies on IMDB or Rotten Tomatoes might have gotten ratings from people who do not share
+        you taste in movies, which means that there are no guarantees that you will enjoy
+        the highly rated movies on those sites. <br/> <br/>
+
+        This site instead recommends the favorite movies of the other users who has rated
+        movies the most similar to you.
+        <br/> <br/>
+
+        <img src="{% static 'tips/images/concept_pic.png' %}" id="concept_pic">
+    </div>
+</div>
+
+{% endblock %}
