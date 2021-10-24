@@ -1,0 +1,14 @@
+[flake8]
+exclude = .git,venv,ENV,ub_env,tips/migrations,
+max-line-length = 120
+ignore =
+    F401 # Imported but unused
+    F405 # Name may be undefined, or defined from star imports: module
+    F403 # 'from module import *' used; unable to detect undefined names
+    E402 # Module level import not at top of file
+    F541 # f-string without any placeholders
+    W503 # Line break occurred before a binary operator
+
+# See
+# https://pypi.org/project/pep8-naming/ for rules prefixed with 'N'
+# https://www.flake8rules.com/ for the other rules

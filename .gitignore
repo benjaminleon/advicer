@@ -1,5 +1,7 @@
 *.pyc
 *~
-.*
+.env
+.idea
+.vscode
 env/
 advicer_notes.txt
