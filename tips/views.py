@@ -178,14 +178,7 @@ class SearchResultsView(generic.ListView):
                 else:
                     print(f"no response for https://www.imdb.com/title/{matched_movie.id}")
 
-            # Something like this might be used to add the url to the movie
-            # print(f"rating_id: {rating_id}")
-            # rating = get_object_or_404(Rating, id=rating_id)
-            # rating.score = new_score
-            # rating.save()
-
             rating_found = False
-            # Uncomment to add the "clear" button to movies which has been rated
             for rating in users_ratings:
                 rating_found = False
                 if rating.movie.__str__() == matched_movie.__str__():
