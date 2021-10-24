@@ -13,6 +13,9 @@
     <div id="main_content">
         {% for movie in common_movies %}
             <li>{{ movie }}</li>
+            {% if movie.img_link != 'failed' and movie.img_link != '_'%}
+                <img src="{{ movie.img_link }}"/>
+            {% endif %}
             <form action="{% url 'tips:set_rating' movie.id %}" method="POST">
                 {% csrf_token %}
                 <div id="show_on_click">
