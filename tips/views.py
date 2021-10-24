@@ -1,3 +1,5 @@
+import requests
+from bs4 import BeautifulSoup
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -9,15 +11,13 @@ from django.contrib.auth import get_user_model
 from tips.get_recommendations import get_recommendations
 import re
 
-MAX_NR_OF_RESULTS = 20
+MAX_NR_OF_RESULTS = 5
 CHOOSABLE_SCORES = [1, 2, 3, 4, 5]
 
 
 def index(request):
     user = get_user_model()
 
-    # Extract the relevant information from the models to make the
-    # recommendation algorithm agnostic about Django
     users_and_ratings = {}
     users = user.objects.all()
     for user in users:
@@ -95,6 +95,7 @@ def set_rating(request, movie_id):
 
     print(f"movie_id: {movie_id}")
     movie = get_object_or_404(Movie, id=movie_id)
+    print(f"movie: {movie}")
     rating, created = Rating.objects.update_or_create(user=request.user, movie=movie)
     if created:
         print(f"Created a new rating: {rating}")
@@ -144,16 +145,42 @@ class SearchResultsView(generic.ListView):
         if not matched_movies:
             matched_movies = Movie.objects.filter(Q(title__icontains=query))
         matched_movies = matched_movies[:MAX_NR_OF_RESULTS]
-
+        print(matched_movies)
         users_ratings = Rating.objects.filter(user=self.request.user)
 
         object_list = []
         for matched_movie in matched_movies:
-            print(f"matched_movie: {matched_movie}")
+            print(f"matched_movie: {matched_movie}, {matched_movie.img_link}, {matched_movie.id}")
+            if matched_movie.img_link == "_":
+                print("Gonna find the url to the image")
+
+                r = requests.get(f'https://www.imdb.com/title/{matched_movie.imdb_id}')
+                if r:
+                    soup = BeautifulSoup(r.text, 'html.parser')
+                    if soup:
+                        url = soup.img['src']
+                        if url.startswith("//fls"):
+                            print(f"Only got a pixel for {matched_movie.imdb_id}: {url}")
+                            m = get_object_or_404(Movie, id=matched_movie.id)
+                            m.img_link = "failed"
+                            print("adding 'failed' to database for the movie")
+                            m.save()
+                        else:
+                            print(f"url: {url}")
+                            matched_movie.img_link = url
+                            m = get_object_or_404(Movie, id=matched_movie.id)
+                            m.img_link = url
+                            print("adding url to database")
+                            m.save()
+
+                    else:
+                        print("no soup")
+                else:
+                    print(f"no response for https://www.imdb.com/title/{matched_movie.id}")
+
             rating_found = False
             for rating in users_ratings:
                 rating_found = False
-                print(rating.movie.__str__())
                 if rating.movie.__str__() == matched_movie.__str__():
                     object_list.append({"movie": matched_movie, "rating": rating})
                     rating_found = True

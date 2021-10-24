@@ -1,0 +1,78 @@
+/home/ben/gunicorn_start
+
+#!/bin/bash
+
+NAME="filmtips"
+DIR=/home/ben/advicer
+USER=ben
+GROUP=ben
+WORKERS=3
+BIND=unix:/home/ben/run/gunicorn.sock
+DJANGO_SETTINGS_MODULE=soulfilm.settings
+DJANGO_WSGI_MODULE=soulfilm.wsgi
+LOG_LEVEL=error
+
+cd $DIR
+source ../venv/bin/activate
+
+export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+export PYTHONPATH=$DIR:$PYTHONPATH
+
+exec ../venv/bin/gunicorn ${DJANGO_WSGI_MODULE}:application \
+  --name $NAME \
+  --workers $WORKERS \
+  --user=$USER \
+  --group=$GROUP \
+  --bind=$BIND \
+  --log-level=$LOG_LEVEL \
+  --log-file=-
+
+
+/home/ben/advicer/.env
+SECRET_KEY=rqr_cjv4igscyu8&&(0ce(=sy=f2)p=f_wn&@0xsp7m$@!kp=d
+ALLOWED_HOSTS=.filmtips.xyz,192.236.179.92
+DATABASE_URL=postgres://u_filmtips:iuheiuheiuh73873hHHAI2hIHl2H9@localhost:5432/filmtips
+
+
+/etc/supervisor/conf.d/ben.conf
+[program:ben]
+command=/home/ben/gunicorn_start
+user=ben
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/home/ben/logs/gunicorn.log
+
+
+/etc/nginx/sites-available/ben
+upstream app_server {
+    server unix:/home/ben/run/gunicorn.sock fail_timeout=0;
+}
+
+server {
+    listen 80;
+    server_name www.filmtips.xyz;  # here can also be the IP address of the server
+
+    keepalive_timeout 5;
+    client_max_body_size 4G;
+
+    access_log /home/ben/logs/nginx-access.log;
+    error_log /home/ben/logs/nginx-error.log;
+
+    location /static/ {
+        alias /home/ben/staticfiles/;
+    }
+
+    # checks for static file, if not found proxy to app
+    location / {
+        try_files $uri @proxy_to_app;
+    }
+
+    location @proxy_to_app {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_pass http://app_server;
+    }
+}
+

@@ -20,6 +20,9 @@
                     {% for recommendation in recommendations %}
                     <ul>
                         <li>{{ recommendation }}</li>
+                        {% if recommendation.img_link != 'failed' and recommendation.img_link != '_'%}
+                            <img src="{{ recommendation.img_link }}"/>
+                        {% endif %}
                         <form action="{% url 'tips:set_rating' recommendation.id %}" method="POST">
                             {% csrf_token %}
                             <div id="show_on_click">

@@ -22,7 +22,9 @@
         <ul id="search_results">
             {% for element in object_list %}
                 <li>{{ element.movie }}</li>
-
+                {% if element.movie.img_link != 'failed' and element.movie.img_link != '_'%}
+                    <img src="{{ element.movie.img_link }}"/>
+                {% endif %}
                 <form action="{% url 'tips:set_rating' element.movie.id %}" method="POST">
                     {% csrf_token %}
                     <div id="show_on_click">
