@@ -4,8 +4,6 @@ unique id, title, and release year.
 
 The resulting file can be imported into the database of this project.
 """
-import sys
-import csv
 import gzip
 import shutil
 
@@ -35,7 +33,6 @@ class TsvPreparer:
     def wash_tsv(input_file_name, output_file_name):
         default_img_url = "_"
         output_file = open(output_file_name, "w", encoding="utf-8")
-        # output_file = open(output_file_name, "w")
         output_file.write(f"id\ttitle\trelease_year\timdb_id\timg_url\n")
         with open(input_file_name, "r", encoding="utf-8") as input_file:
             internal_id = 0
@@ -55,43 +52,7 @@ class TsvPreparer:
                     internal_id += 1
         output_file.close()
 
-    @staticmethod
-    def add_urls(input_file_name, output_file_name):
-        """
-        Input file is expected to be a tab separated list with "id, title, release_year":
-        tt0015724       Dama de noche   1993
-        tt0016906       Frivolinas      2014
-        """
-        import requests
-        from bs4 import BeautifulSoup
-
-        with open(input_file_name, 'r') as input_file:
-            lines = input_file.readlines()
-        assert lines
-
-        with open(output_file_name, 'w') as output_file:
-            for line in lines:
-                splitted_lines = line.split("\t")
-                movie_id = splitted_lines[0]
-                r = requests.get(f'https://www.imdb.com/title/{movie_id}')
-                if r:
-                    soup = BeautifulSoup(r.text, 'html.parser')
-                    if soup:
-                        url = soup.img['src']
-                        if url.startswith("//fls"):
-                            print(f"Only got a pixel for {movie_id}: {url}")
-                            url = None
-                        title = splitted_lines[1]
-                        release_year = splitted_lines[2]
-                        output_file.write(f'{movie_id}\t{title}\t{release_year}\t{url}\n')
-                    else:
-                        print(f"Could not make soup from {movie_id}")
-                else:
-                    print(f"Did not find {movie_id}")
-
 
 if __name__ == "__main__":
     # TsvPreparer.run()
     TsvPreparer.wash_tsv("title.basics.tsv", "ws6.tsv")
-    # TsvPreparer.add_urls(input_file_name="washed_movies_2.tsv",
-    #                      output_file_name="washed_movies_2_with_urls.tsv")
